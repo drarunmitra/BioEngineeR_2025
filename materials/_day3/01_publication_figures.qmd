@@ -63,6 +63,7 @@ ggplot(iris, aes(x = Sepal.Length, y = Petal.Length, color = Species)) +
 ## Adding Statistical Annotations
 
 ```{r}
+#| eval: false
 # Create sample data
 set.seed(2025)
 treatment_data <- tibble(
