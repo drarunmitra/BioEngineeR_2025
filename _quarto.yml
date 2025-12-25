@@ -52,16 +52,15 @@ book:
 
     - part: "Exercises"
       chapters:
-        - exercises/day1_exercises.qmd
-        - exercises/day2_exercises.qmd
-        - exercises/day3_exercises.qmd
+        - exercises/day1/exercise_participant.qmd
+        - exercises/day2/exercise_participant.qmd
+        - exercises/day3/exercise_participant.qmd
 
     - part: "Reference"
       chapters:
-        - handouts/quick_reference.qmd
-        - handouts/cheatsheet_dplyr.qmd
-        - handouts/cheatsheet_ggplot2.qmd
-        - handouts/cheatsheet_statistics.qmd
+        - handouts/dplyr_cheatsheet.qmd
+        - handouts/ggplot2_cheatsheet.qmd
+        - handouts/stats_cheatsheet.qmd
 
 format:
   html:
