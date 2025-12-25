@@ -18,6 +18,7 @@ library(patchwork)
 Complete the theme function:
 
 ```{r}
+#| eval: false
 theme_pub <- function(base_size = 12) {
   theme_classic(base_size = base_size) +
     theme(
@@ -34,6 +35,7 @@ theme_pub <- function(base_size = 12) {
 Use your theme on a scatter plot:
 
 ```{r}
+#| eval: false
 ggplot(mtcars, aes(x = wt, y = mpg, color = factor(cyl))) +
   geom_point(size = 3) +
   labs(
@@ -52,6 +54,7 @@ ggplot(mtcars, aes(x = wt, y = mpg, color = factor(cyl))) +
 ### 2.1 Use Okabe-Ito Palette
 
 ```{r}
+#| eval: false
 okabe_ito <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442",
                "#0072B2", "#D55E00", "#CC79A7", "#999999")
 
@@ -68,6 +71,7 @@ ggplot(iris, aes(x = Species, y = Sepal.Length, fill = Species)) +
 ### 3.1 Create Component Plots
 
 ```{r}
+#| eval: false
 # Plot A: Scatter plot
 p1 <- ggplot(mtcars, aes(wt, mpg)) +
   geom_point() +
@@ -90,12 +94,14 @@ p3 <- ggplot(mtcars, aes(___)) +
 ### 3.2 Combine Side by Side
 
 ```{r}
+#| eval: false
 ___ + ___
 ```
 
 ### 3.3 Stack Vertically
 
 ```{r}
+#| eval: false
 ___ / ___
 ```
 
@@ -104,12 +110,14 @@ ___ / ___
 Create layout: (A + B) over C
 
 ```{r}
+#| eval: false
 (___ + ___) / ___
 ```
 
 ### 3.5 Add Panel Labels
 
 ```{r}
+#| eval: false
 (p1 + p2) / p3 +
   plot_annotation(tag_levels = ___)
 ```
@@ -132,6 +140,7 @@ Requirements:
 - Add figure title
 
 ```{r}
+#| eval: false
 #| fig-width: 10
 #| fig-height: 8
 
@@ -189,6 +198,7 @@ ggsave(
 Add statistical significance annotations to a bar plot:
 
 ```{r}
+#| eval: false
 # Summary data
 summary_data <- mtcars |>
   group_by(cyl) |>

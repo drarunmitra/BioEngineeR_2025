@@ -30,7 +30,7 @@ This workshop introduces R programming for biomedical data analysis, designed fo
 
 - Raise your hand during sessions
 - Use the workshop Slack/chat channel
-- Check the [Quick Reference](handouts/quick_reference.qmd)
+- Check the [Reference Handouts](handouts/dplyr_cheatsheet.qmd)
 
 ---
 

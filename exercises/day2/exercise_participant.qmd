@@ -19,6 +19,7 @@ Using the `iris` dataset:
 Calculate mean, median, and SD for Sepal.Length:
 
 ```{r}
+#| eval: false
 iris |>
   summarize(
     mean_sl = ___,
@@ -32,6 +33,7 @@ iris |>
 Calculate summary statistics for Sepal.Length BY Species:
 
 ```{r}
+#| eval: false
 iris |>
   group_by(___) |>
   summarize(
@@ -50,6 +52,7 @@ iris |>
 Test if mean Sepal.Length differs from 5.8:
 
 ```{r}
+#| eval: false
 t.test(iris$Sepal.Length, mu = ___)
 ```
 
@@ -60,6 +63,7 @@ t.test(iris$Sepal.Length, mu = ___)
 Compare Sepal.Length between setosa and versicolor:
 
 ```{r}
+#| eval: false
 # Filter data
 setosa <- iris |> filter(Species == "setosa") |> pull(Sepal.Length)
 versicolor <- iris |> filter(Species == "versicolor") |> pull(Sepal.Length)
@@ -73,6 +77,7 @@ t.test(___, ___)
 Using mtcars, test if mpg differs by transmission type (am):
 
 ```{r}
+#| eval: false
 t.test(___ ~ ___, data = ___)
 ```
 
@@ -85,6 +90,7 @@ t.test(___ ~ ___, data = ___)
 Test if Sepal.Length differs across all 3 iris Species:
 
 ```{r}
+#| eval: false
 model <- aov(___ ~ ___, data = ___)
 summary(model)
 ```
@@ -94,6 +100,7 @@ summary(model)
 Run Tukey's HSD to find which species differ:
 
 ```{r}
+#| eval: false
 TukeyHSD(___)
 ```
 
@@ -104,6 +111,7 @@ TukeyHSD(___)
 Create a boxplot to visualize the differences:
 
 ```{r}
+#| eval: false
 ggplot(iris, aes(x = ___, y = ___, fill = ___)) +
   geom_boxplot() +
   theme_classic()
@@ -118,6 +126,7 @@ ggplot(iris, aes(x = ___, y = ___, fill = ___)) +
 Find the correlation between Sepal.Length and Petal.Length in iris:
 
 ```{r}
+#| eval: false
 cor(iris$___, iris$___)
 ```
 
@@ -126,6 +135,7 @@ cor(iris$___, iris$___)
 Test if the correlation is significant:
 
 ```{r}
+#| eval: false
 cor.test(___, ___)
 ```
 
@@ -134,6 +144,7 @@ cor.test(___, ___)
 Visualize the relationship:
 
 ```{r}
+#| eval: false
 ggplot(iris, aes(x = Sepal.Length, y = Petal.Length)) +
   geom_point() +
   geom_smooth(method = "___") +
@@ -149,6 +160,7 @@ ggplot(iris, aes(x = Sepal.Length, y = Petal.Length)) +
 Predict Petal.Length from Sepal.Length:
 
 ```{r}
+#| eval: false
 model <- lm(___ ~ ___, data = ___)
 summary(model)
 ```
@@ -163,6 +175,7 @@ summary(model)
 Using mtcars, predict mpg from wt and hp:
 
 ```{r}
+#| eval: false
 model2 <- lm(___ ~ ___ + ___, data = mtcars)
 summary(model2)
 ```
@@ -172,6 +185,7 @@ summary(model2)
 Use broom to get tidy coefficient table:
 
 ```{r}
+#| eval: false
 library(broom)
 tidy(___)
 ```

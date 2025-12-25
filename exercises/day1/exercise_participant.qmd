@@ -17,6 +17,7 @@ library(tidyverse)
 Create the following variables:
 
 ```{r}
+#| eval: false
 # Patient age (45 years)
 patient_age <- ___
 
@@ -32,6 +33,7 @@ sample_id <- ___
 Create a vector of 6 blood pressure readings: 120, 135, 118, 142, 128, 131
 
 ```{r}
+#| eval: false
 bp_readings <- ___
 
 # Calculate the mean
@@ -53,6 +55,7 @@ Create a data frame with 4 patients:
 | P004 | 41 | Placebo |
 
 ```{r}
+#| eval: false
 patients <- data.frame(
   id = ___,
   age = ___,
@@ -71,6 +74,7 @@ Use the `mtcars` dataset for these exercises.
 Select only cars with more than 6 cylinders:
 
 ```{r}
+#| eval: false
 mtcars |>
   filter(___)
 ```
@@ -80,6 +84,7 @@ mtcars |>
 Keep only the mpg, cyl, and hp columns:
 
 ```{r}
+#| eval: false
 mtcars |>
   select(___)
 ```
@@ -89,6 +94,7 @@ mtcars |>
 Create a new column `kpl` (kilometers per liter) by multiplying mpg by 0.425:
 
 ```{r}
+#| eval: false
 mtcars |>
   mutate(kpl = ___) |>
   select(mpg, kpl)
@@ -99,6 +105,7 @@ mtcars |>
 Sort by mpg in descending order:
 
 ```{r}
+#| eval: false
 mtcars |>
   arrange(___) |>
   head(5)
@@ -109,6 +116,7 @@ mtcars |>
 Calculate mean and sd of mpg for each cylinder group:
 
 ```{r}
+#| eval: false
 mtcars |>
   group_by(___) |>
   summarize(
@@ -127,6 +135,7 @@ mtcars |>
 Create a scatter plot of wt (x-axis) vs mpg (y-axis):
 
 ```{r}
+#| eval: false
 ggplot(mtcars, aes(x = ___, y = ___)) +
   ___()
 ```
@@ -136,6 +145,7 @@ ggplot(mtcars, aes(x = ___, y = ___)) +
 Color the points by number of cylinders:
 
 ```{r}
+#| eval: false
 ggplot(mtcars, aes(x = wt, y = mpg, color = ___)) +
   geom_point()
 ```
@@ -145,6 +155,7 @@ ggplot(mtcars, aes(x = wt, y = mpg, color = ___)) +
 Add a title, x-label, and y-label:
 
 ```{r}
+#| eval: false
 ggplot(mtcars, aes(x = wt, y = mpg)) +
   geom_point() +
   labs(
@@ -159,6 +170,7 @@ ggplot(mtcars, aes(x = wt, y = mpg)) +
 Create a boxplot of mpg by cylinder count:
 
 ```{r}
+#| eval: false
 ggplot(mtcars, aes(x = factor(cyl), y = ___)) +
   ___(fill = "steelblue") +
   theme_classic()
@@ -174,6 +186,7 @@ Combine everything - create a scatter plot with:
 - Use theme_classic()
 
 ```{r}
+#| eval: false
 ggplot(___, aes(___)) +
   geom_point(___) +
   geom_smooth(___) +
