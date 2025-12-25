@@ -1,0 +1,106 @@
+---
+title: "Descriptive Statistics"
+subtitle: "Summarizing Your Data"
+---
+
+```{r}
+#| label: setup
+#| include: false
+library(tidyverse)
+```
+
+## Learning Objectives
+
+1. Calculate measures of central tendency
+2. Calculate measures of spread
+3. Create summary tables
+
+## Sample Data
+
+```{r}
+set.seed(2025)
+cell_data <- tibble(
+  treatment = rep(c("Control", "Drug_A", "Drug_B"), each = 30),
+  viability = c(
+    rnorm(30, 95, 5),
+    rnorm(30, 75, 10),
+    rnorm(30, 85, 8)
+  )
+)
+```
+
+## Measures of Central Tendency
+
+```{r}
+# Mean
+mean(cell_data$viability)
+
+# Median
+median(cell_data$viability)
+
+# Mode (no built-in function)
+```
+
+## Measures of Spread
+
+```{r}
+# Standard deviation
+sd(cell_data$viability)
+
+# Variance
+var(cell_data$viability)
+
+# Range
+range(cell_data$viability)
+
+# IQR
+IQR(cell_data$viability)
+```
+
+## Summary by Group
+
+```{r}
+cell_data |>
+  group_by(treatment) |>
+  summarize(
+    n = n(),
+    mean = mean(viability),
+    sd = sd(viability),
+    median = median(viability),
+    min = min(viability),
+    max = max(viability)
+  )
+```
+
+## Visualization
+
+```{r}
+ggplot(cell_data, aes(x = treatment, y = viability, fill = treatment)) +
+  geom_boxplot(alpha = 0.7) +
+  geom_jitter(width = 0.2, alpha = 0.5) +
+  scale_fill_viridis_d() +
+  labs(title = "Cell Viability by Treatment", y = "Viability (%)") +
+  theme_classic() +
+  theme(legend.position = "none")
+```
+
+## Exercise
+
+::: {.callout-caution title="Try It"}
+Using `iris`, calculate mean and SD of Sepal.Length by Species.
+:::
+
+::: {.callout-tip collapse="true" title="Solution"}
+```{r}
+iris |>
+  group_by(Species) |>
+  summarize(
+    mean = mean(Sepal.Length),
+    sd = sd(Sepal.Length)
+  )
+```
+:::
+
+---
+
+**Next:** [Hypothesis Testing](02_hypothesis_testing.qmd)

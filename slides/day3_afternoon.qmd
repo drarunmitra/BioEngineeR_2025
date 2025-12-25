@@ -1,0 +1,216 @@
+---
+title: "Day 3: Quarto & Project"
+subtitle: "Afternoon Session | Data Analysis with R"
+author: "IISc Bio Engineering Workshop"
+date: "January 8, 2025"
+format:
+  revealjs:
+    theme: [default, ../styles/custom.scss]
+    slide-number: true
+    code-line-numbers: false
+    highlight-style: github
+    transition: fade
+---
+
+## Afternoon Agenda
+
+| Time | Topic |
+|------|-------|
+| 14:00 | Quarto Reports |
+| 15:00 | Mini Project Introduction |
+| 15:30 | Work Time |
+| 16:30 | Sharing & Wrap-up |
+| 17:00 | Certificates |
+
+## What is Quarto?
+
+- Next-generation R Markdown
+- Supports R, Python, Julia
+- Multiple output formats
+- Reproducible documents
+
+## Basic Document
+
+```yaml
+---
+title: "My Analysis"
+author: "Your Name"
+format: html
+---
+
+## Introduction
+
+Your text here.
+```
+
+## Code Chunks
+
+````markdown
+```{{r}}
+summary(mtcars)
+```
+````
+
+## Chunk Options
+
+````markdown
+```{{r}}
+#| label: my-plot
+#| fig-cap: "A scatter plot"
+#| fig-width: 8
+
+ggplot(mtcars, aes(wt, mpg)) +
+  geom_point()
+```
+````
+
+## Common Options
+
+| Option | Purpose |
+|--------|---------|
+| `echo: false` | Hide code |
+| `eval: false` | Don't run |
+| `warning: false` | Hide warnings |
+| `fig-width` | Figure width |
+| `fig-cap` | Caption |
+
+## Cross-References
+
+````markdown
+See @fig-scatter for results.
+
+```{{r}}
+#| label: fig-scatter
+#| fig-cap: "MPG vs Weight"
+ggplot(mtcars, aes(wt, mpg)) +
+  geom_point()
+```
+````
+
+## Callout Boxes
+
+::: {.callout-note}
+This is a note.
+:::
+
+::: {.callout-tip}
+This is a tip.
+:::
+
+::: {.callout-warning}
+This is a warning.
+:::
+
+## Rendering
+
+**From RStudio**: Click "Render" or Ctrl+Shift+K
+
+**From terminal**:
+```bash
+quarto render report.qmd
+```
+
+**From R**:
+```r
+quarto::quarto_render("report.qmd")
+```
+
+## Mini Project {.center}
+
+### Your Task
+
+Create a complete analysis report with:
+
+1. Introduction
+2. Methods
+3. Results (stats + figures)
+4. Discussion
+
+## Requirements
+
+✅ At least 2 figures
+
+✅ At least 1 summary table
+
+✅ Statistical test with interpretation
+
+✅ Reproducible code
+
+## Dataset Options
+
+1. **mtcars**: Vehicle performance
+2. **iris**: Flower measurements
+3. **ToothGrowth**: Guinea pig study
+4. **Your own data**: Bring a CSV!
+
+## Work Time! {.center}
+
+### 1.5 hours
+
+📊 Build your analysis
+
+🙋 Ask for help
+
+👥 Collaborate!
+
+## Sharing Time {.center}
+
+- Volunteer to present?
+- 3-5 minutes each
+- Share your findings!
+
+## Workshop Complete! {.center}
+
+### Congratulations! 🎉
+
+## What You Learned
+
+**Day 1**:
+
+- R fundamentals
+- Data wrangling
+- ggplot2 basics
+
+**Day 2**:
+
+- Statistical testing
+- t-tests & ANOVA
+- Correlation & regression
+
+**Day 3**:
+
+- Publication figures
+- Quarto reports
+- Complete workflows
+
+## Keep Learning
+
+### Resources
+
+- [R for Data Science](https://r4ds.hadley.nz/)
+- [ggplot2 Book](https://ggplot2-book.org/)
+- [Quarto Guide](https://quarto.org/docs/guide/)
+- [RStudio Community](https://community.rstudio.com/)
+
+## Stay Connected
+
+### Questions?
+
+📧 Email: workshop@example.com
+
+💬 Discussion: community.rstudio.com
+
+📦 Materials: GitHub repo
+
+## Thank You! {.center}
+
+### Happy Coding! 🚀
+
+```{r}
+#| echo: false
+#| fig-align: center
+library(ggplot2)
+ggplot(data.frame(x = 1, y = 1), aes(x, y)) +
+  annotate("text", x = 1, y = 1, label = "🎓", size = 30) +
+  theme_void()
+```

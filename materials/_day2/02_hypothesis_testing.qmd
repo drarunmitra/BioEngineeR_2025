@@ -1,0 +1,92 @@
+---
+title: "Hypothesis Testing"
+subtitle: "Making Statistical Decisions"
+---
+
+```{r}
+#| label: setup
+#| include: false
+library(tidyverse)
+```
+
+## Learning Objectives
+
+1. Understand null and alternative hypotheses
+2. Interpret p-values correctly
+3. Know Type I and Type II errors
+
+## The Logic of Hypothesis Testing
+
+1. State null hypothesis (H₀) and alternative (H₁)
+2. Collect data
+3. Calculate test statistic and p-value
+4. Make decision based on significance level (α)
+
+## Null Hypothesis (H₀)
+
+The "no effect" or "no difference" hypothesis.
+
+- "The drug has no effect on cell viability"
+- "There is no difference between groups"
+
+## Alternative Hypothesis (H₁)
+
+What we're trying to show:
+
+- "The drug affects cell viability"
+- "There is a difference between groups"
+
+## P-Value
+
+The probability of observing results as extreme as ours, **if H₀ were true**.
+
+### P-Value is NOT:
+
+- ❌ The probability that H₀ is true
+- ❌ The probability of a false positive
+- ❌ The size of the effect
+
+### Decision Rule
+
+| P-value | Common Interpretation |
+|---------|----------------------|
+| p < 0.001 | Very strong evidence |
+| p < 0.01 | Strong evidence |
+| p < 0.05 | Evidence |
+| p ≥ 0.05 | Insufficient evidence |
+
+## Types of Errors
+
+|  | H₀ True | H₀ False |
+|--|---------|----------|
+| **Reject H₀** | Type I Error (α) | Correct |
+| **Fail to Reject** | Correct | Type II Error (β) |
+
+- **Type I**: False positive (seeing effect when none exists)
+- **Type II**: False negative (missing a real effect)
+
+## Effect Size Matters
+
+Statistical significance ≠ practical significance
+
+```{r}
+# Tiny effect can be "significant" with large n
+set.seed(42)
+x <- rnorm(10000, 100, 15)
+y <- rnorm(10000, 100.5, 15)  # 0.5 unit difference
+
+t.test(x, y)
+```
+
+Small p-value, but difference of 0.5 may be meaningless.
+
+## Best Practices
+
+1. **State hypotheses before collecting data**
+2. **Choose α before analysis** (usually 0.05)
+3. **Report effect sizes, not just p-values**
+4. **Consider practical significance**
+
+---
+
+**Next:** [t-Tests](03_ttests.qmd)

@@ -1,0 +1,279 @@
+---
+title: "Case Study: Biomedical Analysis"
+subtitle: "Complete Analysis Workflow"
+---
+
+```{r}
+#| label: setup
+#| include: false
+library(tidyverse)
+library(patchwork)
+library(broom)
+```
+
+## Learning Objectives
+
+1. Apply complete analysis workflow
+2. Integrate data wrangling, statistics, and visualization
+3. Practice biomedical data interpretation
+
+## The Dataset: Cell Viability Study
+
+Simulated study of drug treatment effects on cell viability.
+
+```{r}
+set.seed(2025)
+
+# Generate synthetic biomedical data
+cell_study <- tibble(
+  sample_id = paste0("S", sprintf("%03d", 1:120)),
+  treatment = rep(c("Control", "Drug_A", "Drug_B", "Combo"), each = 30),
+  cell_line = rep(rep(c("HeLa", "MCF7", "A549"), each = 10), 4),
+  viability = c(
+    rnorm(30, 95, 5),   # Control
+    rnorm(30, 75, 8),   # Drug A
+    rnorm(30, 70, 10),  # Drug B
+    rnorm(30, 45, 12)   # Combo
+  ) |> pmax(0) |> pmin(100),  # Bound 0-100%
+  apoptosis = 100 - viability + rnorm(120, 0, 5) |> pmax(0),
+  concentration_um = rep(c(0, 10, 25, 50), each = 30)
+)
+
+glimpse(cell_study)
+```
+
+## Step 1: Exploratory Analysis
+
+### Summary Statistics
+
+```{r}
+cell_study |>
+  group_by(treatment) |>
+  summarize(
+    n = n(),
+    mean_viability = mean(viability),
+    sd_viability = sd(viability),
+    mean_apoptosis = mean(apoptosis),
+    .groups = "drop"
+  ) |>
+  arrange(mean_viability)
+```
+
+### By Cell Line
+
+```{r}
+cell_study |>
+  group_by(treatment, cell_line) |>
+  summarize(
+    mean_viability = mean(viability),
+    se = sd(viability) / sqrt(n()),
+    .groups = "drop"
+  )
+```
+
+## Step 2: Visualization
+
+### Distribution Overview
+
+```{r}
+ggplot(cell_study, aes(x = treatment, y = viability, fill = treatment)) +
+  geom_boxplot(alpha = 0.7) +
+  geom_jitter(width = 0.2, alpha = 0.5, size = 1) +
+  scale_fill_viridis_d(option = "plasma", end = 0.8) +
+  labs(
+    title = "Cell Viability by Treatment",
+    x = "Treatment Group",
+    y = "Viability (%)"
+  ) +
+  theme_classic() +
+  theme(legend.position = "none")
+```
+
+### By Cell Line
+
+```{r}
+ggplot(cell_study, aes(x = treatment, y = viability, fill = cell_line)) +
+  geom_boxplot(alpha = 0.7) +
+  scale_fill_brewer(palette = "Set2", name = "Cell Line") +
+  labs(
+    title = "Cell Viability by Treatment and Cell Line",
+    x = "Treatment Group",
+    y = "Viability (%)"
+  ) +
+  theme_classic() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+### Viability vs Apoptosis
+
+```{r}
+ggplot(cell_study, aes(x = viability, y = apoptosis, color = treatment)) +
+  geom_point(alpha = 0.7, size = 2) +
+  geom_smooth(method = "lm", se = FALSE) +
+  scale_color_viridis_d(option = "plasma", end = 0.8) +
+  labs(
+    title = "Viability vs Apoptosis by Treatment",
+    x = "Cell Viability (%)",
+    y = "Apoptosis (%)"
+  ) +
+  theme_classic()
+```
+
+## Step 3: Statistical Analysis
+
+### ANOVA: Treatment Effect
+
+```{r}
+model_treatment <- aov(viability ~ treatment, data = cell_study)
+summary(model_treatment)
+```
+
+### Post-hoc Comparisons
+
+```{r}
+TukeyHSD(model_treatment)
+```
+
+### Two-way ANOVA: Treatment × Cell Line
+
+```{r}
+model_2way <- aov(viability ~ treatment * cell_line, data = cell_study)
+summary(model_2way)
+```
+
+### Correlation Analysis
+
+```{r}
+cor.test(cell_study$viability, cell_study$apoptosis)
+```
+
+### Regression: Dose-Response
+
+```{r}
+model_dose <- lm(viability ~ concentration_um, data = cell_study)
+tidy(model_dose)
+glance(model_dose)
+```
+
+## Step 4: Publication Figure
+
+```{r}
+#| fig-width: 10
+#| fig-height: 8
+
+# Theme
+theme_pub <- theme_classic(base_size = 10) +
+  theme(
+    plot.title = element_text(face = "bold", size = 11),
+    axis.title = element_text(face = "bold"),
+    panel.border = element_rect(fill = NA, color = "black")
+  )
+
+# Panel A: Viability by treatment
+fig_a <- cell_study |>
+  group_by(treatment) |>
+  summarize(
+    mean = mean(viability),
+    se = sd(viability) / sqrt(n())
+  ) |>
+  ggplot(aes(x = reorder(treatment, -mean), y = mean, fill = treatment)) +
+  geom_col(width = 0.7) +
+  geom_errorbar(aes(ymin = mean - se, ymax = mean + se), width = 0.2) +
+  scale_fill_viridis_d(option = "plasma", end = 0.8) +
+  labs(title = "Cell Viability by Treatment", x = NULL, y = "Viability (%)") +
+  theme_pub +
+  theme(legend.position = "none", axis.text.x = element_text(angle = 45, hjust = 1))
+
+# Panel B: By cell line
+fig_b <- ggplot(cell_study, aes(x = treatment, y = viability, fill = cell_line)) +
+  geom_boxplot(alpha = 0.8) +
+  scale_fill_brewer(palette = "Set2", name = "Cell Line") +
+  labs(title = "Treatment Response by Cell Line", x = NULL, y = "Viability (%)") +
+  theme_pub +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        legend.position = c(0.85, 0.85))
+
+# Panel C: Dose response
+fig_c <- ggplot(cell_study, aes(x = concentration_um, y = viability)) +
+  geom_point(alpha = 0.5) +
+  geom_smooth(method = "lm", color = "red") +
+  labs(title = "Dose-Response Relationship",
+       x = "Concentration (μM)", y = "Viability (%)") +
+  theme_pub
+
+# Panel D: Viability vs Apoptosis
+fig_d <- ggplot(cell_study, aes(x = viability, y = apoptosis, color = treatment)) +
+  geom_point(alpha = 0.7) +
+  geom_smooth(method = "lm", se = FALSE, linewidth = 0.8) +
+  scale_color_viridis_d(option = "plasma", end = 0.8, name = "Treatment") +
+  labs(title = "Viability-Apoptosis Correlation",
+       x = "Viability (%)", y = "Apoptosis (%)") +
+  theme_pub +
+  theme(legend.position = "bottom")
+
+# Combine
+(fig_a + fig_b) / (fig_c + fig_d) +
+  plot_annotation(
+    title = "Drug Treatment Effects on Cell Viability",
+    subtitle = "In vitro analysis across three cell lines (n = 120)",
+    caption = "Figure 2. Treatment significantly reduced cell viability (p < 0.001). Combination therapy showed greatest effect.",
+    tag_levels = "A"
+  ) &
+  theme(
+    plot.tag = element_text(face = "bold", size = 12)
+  )
+```
+
+## Step 5: Summary Table
+
+```{r}
+cell_study |>
+  group_by(treatment) |>
+  summarize(
+    n = n(),
+    `Viability (mean)` = round(mean(viability), 1),
+    `Viability (SD)` = round(sd(viability), 1),
+    `Apoptosis (mean)` = round(mean(apoptosis), 1),
+    `Apoptosis (SD)` = round(sd(apoptosis), 1)
+  ) |>
+  knitr::kable()
+```
+
+## Key Findings
+
+1. **Treatment Effect**: Significant difference in viability across treatments (F = X, p < 0.001)
+2. **Combination Therapy**: Combo treatment showed lowest viability (~45%)
+3. **Cell Line**: No significant interaction with cell line
+4. **Correlation**: Strong negative correlation between viability and apoptosis (r = -0.9)
+
+## Exercise
+
+::: {.callout-caution title="Try It"}
+Analyze the relationship between `concentration_um` and `apoptosis`:
+
+1. Create a scatter plot with regression line
+2. Calculate correlation
+3. Fit a linear model and interpret
+:::
+
+::: {.callout-tip collapse="true" title="Solution"}
+```{r}
+# Scatter plot
+ggplot(cell_study, aes(x = concentration_um, y = apoptosis)) +
+  geom_point(alpha = 0.5) +
+  geom_smooth(method = "lm", color = "darkred") +
+  labs(x = "Concentration (μM)", y = "Apoptosis (%)") +
+  theme_classic()
+
+# Correlation
+cor.test(cell_study$concentration_um, cell_study$apoptosis)
+
+# Linear model
+model <- lm(apoptosis ~ concentration_um, data = cell_study)
+summary(model)
+```
+:::
+
+---
+
+**Next:** [Quarto Reports](04_quarto_reports.qmd)

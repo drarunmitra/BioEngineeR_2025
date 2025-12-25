@@ -1,0 +1,37 @@
+---
+title: "Data Analysis with R"
+subtitle: "3-Day Workshop for Bio Engineering"
+---
+
+## Welcome!
+
+This workshop introduces R programming for biomedical data analysis, designed for researchers at IISc Bio Engineering.
+
+### Schedule Overview
+
+| Day | Date | Theme |
+|-----|------|-------|
+| **Day 1** | Jan 6 | R Foundations |
+| **Day 2** | Jan 7 | Statistics & Analysis |
+| **Day 3** | Jan 8 | Reporting & Communication |
+
+### What You'll Learn
+
+- **Day 1:** RStudio, data types, importing data, tidyverse basics, dplyr, ggplot2
+- **Day 2:** Descriptive statistics, hypothesis testing, t-tests, ANOVA, regression
+- **Day 3:** Publication figures, Quarto reports, reproducibility, mini-project
+
+### Prerequisites
+
+- Laptop with R (≥4.3) and RStudio installed
+- No prior programming experience required
+
+### Getting Help
+
+- Raise your hand during sessions
+- Use the workshop Slack/chat channel
+- Check the [Quick Reference](handouts/quick_reference.qmd)
+
+---
+
+**Let's get started!**

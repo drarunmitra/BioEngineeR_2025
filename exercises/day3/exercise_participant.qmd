@@ -1,0 +1,213 @@
+---
+title: "Day 3 Exercises: Publication Figures"
+subtitle: "Participant Version"
+format: html
+---
+
+```{r}
+#| label: setup
+#| include: false
+library(tidyverse)
+library(patchwork)
+```
+
+## Exercise 1: Publication Theme
+
+### 1.1 Create a Custom Theme
+
+Complete the theme function:
+
+```{r}
+theme_pub <- function(base_size = 12) {
+  theme_classic(base_size = base_size) +
+    theme(
+      plot.title = element_text(face = "___", hjust = 0),
+      axis.title = element_text(face = "___"),
+      panel.border = element_rect(fill = ___, color = "black"),
+      legend.position = "___"
+    )
+}
+```
+
+### 1.2 Apply the Theme
+
+Use your theme on a scatter plot:
+
+```{r}
+ggplot(mtcars, aes(x = wt, y = mpg, color = factor(cyl))) +
+  geom_point(size = 3) +
+  labs(
+    title = ___,
+    x = ___,
+    y = ___,
+    color = "Cylinders"
+  ) +
+  ___  # Apply theme
+```
+
+---
+
+## Exercise 2: Colorblind-Friendly Colors
+
+### 2.1 Use Okabe-Ito Palette
+
+```{r}
+okabe_ito <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442",
+               "#0072B2", "#D55E00", "#CC79A7", "#999999")
+
+ggplot(iris, aes(x = Species, y = Sepal.Length, fill = Species)) +
+  geom_boxplot() +
+  scale_fill_manual(values = ___) +
+  theme_classic()
+```
+
+---
+
+## Exercise 3: Multi-Panel Figures
+
+### 3.1 Create Component Plots
+
+```{r}
+# Plot A: Scatter plot
+p1 <- ggplot(mtcars, aes(wt, mpg)) +
+  geom_point() +
+  labs(title = "Weight vs MPG") +
+  theme_classic()
+
+# Plot B: Box plot (complete this)
+p2 <- ggplot(mtcars, aes(___, ___)) +
+  geom_boxplot() +
+  labs(title = "MPG by Cylinders") +
+  theme_classic()
+
+# Plot C: Histogram (complete this)
+p3 <- ggplot(mtcars, aes(___)) +
+  geom_histogram(bins = 10, fill = "steelblue") +
+  labs(title = "MPG Distribution") +
+  theme_classic()
+```
+
+### 3.2 Combine Side by Side
+
+```{r}
+___ + ___
+```
+
+### 3.3 Stack Vertically
+
+```{r}
+___ / ___
+```
+
+### 3.4 Complex Layout
+
+Create layout: (A + B) over C
+
+```{r}
+(___ + ___) / ___
+```
+
+### 3.5 Add Panel Labels
+
+```{r}
+(p1 + p2) / p3 +
+  plot_annotation(tag_levels = ___)
+```
+
+---
+
+## Exercise 4: Complete Figure
+
+Create a publication-ready 2x2 figure for the iris dataset:
+
+- Panel A: Sepal.Length vs Sepal.Width scatter (color by Species)
+- Panel B: Petal.Length vs Petal.Width scatter (color by Species)
+- Panel C: Sepal.Length boxplot by Species
+- Panel D: Petal.Length boxplot by Species
+
+Requirements:
+- Use consistent theme
+- Add panel labels (A, B, C, D)
+- Collect legends
+- Add figure title
+
+```{r}
+#| fig-width: 10
+#| fig-height: 8
+
+# Panel A
+fig_a <- ggplot(iris, aes(___)) +
+  geom_point() +
+  theme_classic()
+
+# Panel B
+fig_b <- ___
+
+# Panel C
+fig_c <- ___
+
+# Panel D
+fig_d <- ___
+
+# Combine
+(___) / (___) +
+  plot_layout(guides = "collect") +
+  plot_annotation(
+    title = ___,
+    tag_levels = "A"
+  )
+```
+
+---
+
+## Exercise 5: Export Figure
+
+Complete the export code:
+
+```{r}
+#| eval: false
+# Save as high-resolution TIFF
+ggsave(
+  filename = "___",
+  width = ___,
+  height = ___,
+  dpi = ___
+)
+
+# Save as PDF
+ggsave(
+  filename = "___",
+  width = ___,
+  height = ___
+)
+```
+
+---
+
+## Bonus: Annotated Figure
+
+Add statistical significance annotations to a bar plot:
+
+```{r}
+# Summary data
+summary_data <- mtcars |>
+  group_by(cyl) |>
+  summarize(
+    mean_mpg = mean(mpg),
+    se = sd(mpg) / sqrt(n())
+  )
+
+# Bar plot with error bars and significance
+ggplot(summary_data, aes(x = factor(cyl), y = mean_mpg, fill = factor(cyl))) +
+  geom_col() +
+  geom_errorbar(aes(ymin = ___, ymax = ___), width = 0.2) +
+  # Add annotation for significance (manually)
+  annotate("text", x = 2, y = 28, label = "***") +
+  labs(
+    title = "Mean MPG by Cylinder Count",
+    x = "Cylinders",
+    y = "Mean MPG (± SE)"
+  ) +
+  theme_classic() +
+  theme(legend.position = "none")
+```

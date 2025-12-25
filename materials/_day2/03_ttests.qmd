@@ -1,0 +1,110 @@
+---
+title: "t-Tests"
+subtitle: "Comparing Means"
+---
+
+```{r}
+#| label: setup
+#| include: false
+library(tidyverse)
+```
+
+## Learning Objectives
+
+1. Perform one-sample, two-sample, and paired t-tests
+2. Check assumptions
+3. Interpret and report results
+
+## Types of t-Tests
+
+| Type | Use Case |
+|------|----------|
+| One-sample | Compare mean to known value |
+| Two-sample | Compare means of two independent groups |
+| Paired | Compare means of matched pairs |
+
+## One-Sample t-Test
+
+Is the mean different from a specific value?
+
+```{r}
+# Sample data
+viability <- c(92, 88, 95, 91, 87, 93, 89, 94, 90, 86)
+
+# Test: Is mean different from 90%?
+t.test(viability, mu = 90)
+```
+
+## Two-Sample t-Test
+
+Compare means of two independent groups:
+
+```{r}
+set.seed(2025)
+control <- rnorm(20, 95, 5)
+treatment <- rnorm(20, 85, 8)
+
+t.test(treatment, control)
+```
+
+### Using Formula Syntax
+
+```{r}
+data <- tibble(
+  group = rep(c("Control", "Treatment"), each = 20),
+  value = c(control, treatment)
+)
+
+t.test(value ~ group, data = data)
+```
+
+## Paired t-Test
+
+Same subjects measured twice (before/after):
+
+```{r}
+before <- c(120, 135, 128, 140, 132)
+after <- c(115, 128, 122, 130, 126)
+
+t.test(before, after, paired = TRUE)
+```
+
+## Checking Assumptions
+
+### 1. Normality
+
+```{r}
+shapiro.test(viability)
+
+# Visual check
+qqnorm(viability)
+qqline(viability)
+```
+
+### 2. Equal Variances (Two-sample)
+
+```{r}
+var.test(control, treatment)
+```
+
+If variances unequal, use Welch's t-test (the default in R).
+
+## Reporting Results
+
+> Viability was significantly lower in the treatment group (M = 85.2, SD = 7.8) compared to control (M = 95.1, SD = 4.9), t(38) = 4.73, p < .001.
+
+## Exercise
+
+::: {.callout-caution title="Try It"}
+Test if mean mpg in `mtcars` is different from 20.
+:::
+
+::: {.callout-tip collapse="true" title="Solution"}
+```{r}
+t.test(mtcars$mpg, mu = 20)
+```
+:::
+
+---
+
+**Next:** [ANOVA](04_anova.qmd)

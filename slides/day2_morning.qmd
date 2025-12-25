@@ -1,0 +1,169 @@
+---
+title: "Day 2: Statistical Analysis"
+subtitle: "Morning Session | Data Analysis with R"
+author: "IISc Bio Engineering Workshop"
+date: "January 7, 2025"
+format:
+  revealjs:
+    theme: [default, ../styles/custom.scss]
+    slide-number: true
+    code-line-numbers: false
+    highlight-style: github
+    transition: fade
+---
+
+## Day 2 Agenda
+
+| Time | Topic |
+|------|-------|
+| 09:00 | Descriptive Statistics |
+| 10:00 | Hypothesis Testing Concepts |
+| 10:30 | Break |
+| 10:45 | t-tests |
+| 12:00 | Exercises |
+| 12:30 | Lunch |
+| 14:00 | ANOVA |
+| 15:00 | Correlation & Regression |
+| 16:00 | Your Data Workshop |
+
+## Descriptive Statistics
+
+```{r}
+#| echo: true
+library(tidyverse)
+
+mtcars |>
+  summarize(
+    mean_mpg = mean(mpg),
+    sd_mpg = sd(mpg),
+    median_mpg = median(mpg),
+    n = n()
+  )
+```
+
+## By Group
+
+```{r}
+#| echo: true
+mtcars |>
+  group_by(cyl) |>
+  summarize(
+    mean = mean(mpg),
+    sd = sd(mpg),
+    n = n()
+  )
+```
+
+## Hypothesis Testing
+
+### The Logic
+
+1. State null hypothesis (H₀)
+2. Collect data
+3. Calculate test statistic
+4. Determine p-value
+5. Make decision
+
+## P-value
+
+**Definition**: Probability of observing data this extreme (or more) if H₀ is true
+
+- p < 0.05 → "Statistically significant"
+- p ≥ 0.05 → "Not significant"
+
+⚠️ P-value ≠ probability that H₀ is true!
+
+## Type I and Type II Errors
+
+|  | H₀ True | H₀ False |
+|--|---------|----------|
+| Reject H₀ | Type I (α) | Correct |
+| Accept H₀ | Correct | Type II (β) |
+
+- **Type I**: False positive
+- **Type II**: False negative
+
+## The t-test
+
+Compares means between groups
+
+### Types:
+1. One-sample t-test
+2. Two-sample (independent) t-test
+3. Paired t-test
+
+## One-Sample t-test
+
+*Is the mean different from a known value?*
+
+```{r}
+#| echo: true
+t.test(mtcars$mpg, mu = 25)
+```
+
+## Two-Sample t-test
+
+*Do two groups have different means?*
+
+```{r}
+#| echo: true
+# Create example data
+auto <- mtcars |> filter(am == 0) |> pull(mpg)
+manual <- mtcars |> filter(am == 1) |> pull(mpg)
+
+t.test(auto, manual)
+```
+
+## Formula Syntax
+
+```{r}
+#| echo: true
+t.test(mpg ~ am, data = mtcars)
+```
+
+**Read as**: mpg *by* am (transmission type)
+
+## Paired t-test
+
+*Before/after measurements on same subjects*
+
+```{r}
+#| echo: true
+# Simulated before/after data
+set.seed(123)
+before <- rnorm(20, 100, 15)
+after <- before + rnorm(20, 10, 5)
+
+t.test(before, after, paired = TRUE)
+```
+
+## Assumptions of t-test
+
+1. **Independence**: Observations are independent
+2. **Normality**: Data approximately normal
+3. **Homogeneity**: Equal variances (for two-sample)
+
+## Checking Normality
+
+```{r}
+#| echo: true
+shapiro.test(mtcars$mpg)
+```
+
+p > 0.05 → Can assume normality
+
+## Exercise {.center}
+
+Test if mean Sepal.Length in `iris` differs from 5.5:
+
+```{r}
+#| echo: true
+#| eval: false
+t.test(iris$Sepal.Length, mu = 5.5)
+```
+
+## Break Time! {.center}
+
+### 15 minutes
+
+☕ See you back soon!

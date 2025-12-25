@@ -1,0 +1,192 @@
+---
+title: "Day 2: ANOVA & Regression"
+subtitle: "Afternoon Session | Data Analysis with R"
+author: "IISc Bio Engineering Workshop"
+date: "January 7, 2025"
+format:
+  revealjs:
+    theme: [default, ../styles/custom.scss]
+    slide-number: true
+    code-line-numbers: false
+    highlight-style: github
+    transition: fade
+---
+
+## Afternoon Agenda
+
+| Time | Topic |
+|------|-------|
+| 14:00 | ANOVA |
+| 15:00 | Correlation |
+| 15:30 | Break |
+| 15:45 | Regression |
+| 16:30 | Your Data Workshop |
+| 17:00 | Wrap-up |
+
+## ANOVA
+
+**Analysis of Variance**
+
+- Extension of t-test to 3+ groups
+- Tests if means differ across groups
+- H₀: All group means are equal
+
+## One-Way ANOVA
+
+```{r}
+#| echo: true
+library(tidyverse)
+
+model <- aov(mpg ~ factor(cyl), data = mtcars)
+summary(model)
+```
+
+## Interpretation
+
+- **F value**: Ratio of between-group to within-group variance
+- **Pr(>F)**: p-value
+- If p < 0.05: At least one group differs
+
+**But which groups?**
+
+## Post-hoc: Tukey HSD
+
+```{r}
+#| echo: true
+TukeyHSD(model)
+```
+
+## ANOVA Visualization
+
+```{r}
+#| echo: true
+#| output-location: column
+ggplot(mtcars, aes(factor(cyl), mpg,
+                   fill = factor(cyl))) +
+  geom_boxplot() +
+  theme_classic() +
+  theme(legend.position = "none")
+```
+
+## Correlation
+
+**Measures linear relationship between two variables**
+
+- r = 1: Perfect positive
+- r = 0: No relationship
+- r = -1: Perfect negative
+
+## Calculating Correlation
+
+```{r}
+#| echo: true
+cor(mtcars$wt, mtcars$mpg)
+```
+
+### With Hypothesis Test
+
+```{r}
+#| echo: true
+cor.test(mtcars$wt, mtcars$mpg)
+```
+
+## Correlation Strength
+
+| r | Strength |
+|---|----------|
+| 0.0 - 0.3 | Weak |
+| 0.3 - 0.7 | Moderate |
+| 0.7 - 1.0 | Strong |
+
+## Visualizing Correlation
+
+```{r}
+#| echo: true
+#| output-location: column
+ggplot(mtcars, aes(wt, mpg)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  theme_classic()
+```
+
+## Simple Linear Regression
+
+**Predicting one variable from another**
+
+$$y = \beta_0 + \beta_1 x + \epsilon$$
+
+- β₀: Intercept
+- β₁: Slope
+- ε: Error
+
+## Fitting a Model
+
+```{r}
+#| echo: true
+model <- lm(mpg ~ wt, data = mtcars)
+summary(model)
+```
+
+## Interpretation
+
+- **Intercept (37.29)**: Expected mpg when wt = 0
+- **wt (-5.34)**: Each 1000 lb increase → 5.34 mpg decrease
+- **R² (0.75)**: 75% of variance explained
+
+## Multiple Regression
+
+```{r}
+#| echo: true
+model2 <- lm(mpg ~ wt + hp + cyl, data = mtcars)
+summary(model2)
+```
+
+## Tidy Output with broom
+
+```{r}
+#| echo: true
+library(broom)
+tidy(model)
+```
+
+## Model Statistics
+
+```{r}
+#| echo: true
+glance(model)
+```
+
+## Your Data Workshop {.center}
+
+### Practice Time!
+
+Choose a dataset and apply what you've learned:
+
+1. Descriptive statistics
+2. Visualization
+3. Statistical test
+4. Interpretation
+
+## Day 2 Recap
+
+✅ Descriptive statistics
+
+✅ Hypothesis testing concepts
+
+✅ t-tests (one-sample, two-sample, paired)
+
+✅ ANOVA and post-hoc tests
+
+✅ Correlation and regression
+
+## Tomorrow: Day 3
+
+- Publication-quality figures
+- Multi-panel figures with patchwork
+- Case study analysis
+- Quarto reports
+- Mini project
+
+## Questions? {.center}
+
+### See you tomorrow at 9:00 AM!

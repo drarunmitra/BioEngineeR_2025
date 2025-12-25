@@ -1,0 +1,242 @@
+---
+title: "Multi-Panel Figures"
+subtitle: "Combining Plots with patchwork"
+---
+
+```{r}
+#| label: setup
+#| include: false
+library(tidyverse)
+library(patchwork)
+```
+
+## Learning Objectives
+
+1. Combine multiple plots into one figure
+2. Use patchwork for layout control
+3. Add panel labels (A, B, C...)
+
+## The patchwork Package
+
+```{r}
+library(patchwork)
+```
+
+patchwork makes it easy to combine ggplot2 plots.
+
+## Basic Combinations
+
+### Creating Component Plots
+
+```{r}
+# Plot A: Scatter
+p1 <- ggplot(mtcars, aes(wt, mpg)) +
+  geom_point() +
+  labs(title = "Weight vs MPG") +
+  theme_classic()
+
+# Plot B: Boxplot
+p2 <- ggplot(mtcars, aes(factor(cyl), mpg)) +
+  geom_boxplot() +
+  labs(title = "MPG by Cylinders", x = "Cylinders") +
+  theme_classic()
+
+# Plot C: Histogram
+p3 <- ggplot(mtcars, aes(mpg)) +
+  geom_histogram(bins = 10, fill = "steelblue") +
+  labs(title = "MPG Distribution") +
+  theme_classic()
+```
+
+### Side by Side
+
+```{r}
+p1 + p2
+```
+
+### Stacked
+
+```{r}
+p1 / p2
+```
+
+## Complex Layouts
+
+### Three Panels
+
+```{r}
+(p1 + p2) / p3
+```
+
+### With Widths
+
+```{r}
+p1 + p2 + p3 + plot_layout(widths = c(2, 1, 1))
+```
+
+## Adding Panel Labels
+
+```{r}
+(p1 + p2) / p3 +
+  plot_annotation(tag_levels = "A")
+```
+
+### Customize Labels
+
+```{r}
+(p1 + p2) / p3 +
+  plot_annotation(
+    tag_levels = "A",
+    tag_prefix = "(",
+    tag_suffix = ")"
+  ) &
+  theme(plot.tag = element_text(face = "bold", size = 14))
+```
+
+## Shared Elements
+
+### Common Legend
+
+```{r}
+# Create plots with same color mapping
+pa <- ggplot(iris, aes(Sepal.Length, Petal.Length, color = Species)) +
+  geom_point() +
+  theme_classic()
+
+pb <- ggplot(iris, aes(Sepal.Width, Petal.Width, color = Species)) +
+  geom_point() +
+  theme_classic()
+
+pa + pb + plot_layout(guides = "collect")
+```
+
+### Common Theme
+
+```{r}
+(p1 + p2) / p3 &
+  theme_classic(base_size = 11) &
+  theme(plot.title = element_text(size = 10, face = "bold"))
+```
+
+## Nested Layouts
+
+```{r}
+# Create fourth plot
+p4 <- ggplot(mtcars, aes(factor(gear))) +
+  geom_bar(fill = "coral") +
+  labs(title = "Gear Count", x = "Gears") +
+  theme_classic()
+
+# Complex nesting
+(p1 | (p2 / p4)) / p3 +
+  plot_annotation(tag_levels = "A")
+```
+
+## Empty Spaces
+
+```{r}
+p1 + plot_spacer() + p2
+```
+
+## Inset Plots
+
+```{r}
+p1 + inset_element(p3, left = 0.6, bottom = 0.6, right = 1, top = 1)
+```
+
+## Complete Publication Figure
+
+```{r}
+#| fig-width: 10
+#| fig-height: 8
+
+# Theme for all
+theme_pub <- theme_classic(base_size = 11) +
+  theme(
+    plot.title = element_text(face = "bold", size = 10),
+    axis.title = element_text(size = 9),
+    panel.border = element_rect(fill = NA, color = "black")
+  )
+
+# Recreate with consistent theme
+fig_a <- ggplot(mtcars, aes(wt, mpg, color = factor(cyl))) +
+  geom_point(size = 2) +
+  geom_smooth(method = "lm", se = FALSE) +
+  scale_color_brewer(palette = "Set1", name = "Cylinders") +
+  labs(title = "Fuel Efficiency", x = "Weight (1000 lbs)", y = "MPG") +
+  theme_pub +
+  theme(legend.position = c(0.8, 0.8))
+
+fig_b <- ggplot(mtcars, aes(factor(cyl), mpg, fill = factor(cyl))) +
+  geom_boxplot(show.legend = FALSE) +
+  scale_fill_brewer(palette = "Set1") +
+  labs(title = "Distribution by Cylinders", x = "Cylinders", y = "MPG") +
+  theme_pub
+
+fig_c <- ggplot(mtcars, aes(hp, mpg)) +
+  geom_point() +
+  geom_smooth(method = "lm", color = "red") +
+  labs(title = "Power vs Efficiency", x = "Horsepower", y = "MPG") +
+  theme_pub
+
+fig_d <- mtcars |>
+  group_by(cyl) |>
+  summarize(mean_mpg = mean(mpg), se = sd(mpg)/sqrt(n())) |>
+  ggplot(aes(factor(cyl), mean_mpg, fill = factor(cyl))) +
+  geom_col(show.legend = FALSE) +
+  geom_errorbar(aes(ymin = mean_mpg - se, ymax = mean_mpg + se), width = 0.2) +
+  scale_fill_brewer(palette = "Set1") +
+  labs(title = "Mean MPG (± SE)", x = "Cylinders", y = "Mean MPG") +
+  theme_pub
+
+# Combine
+(fig_a + fig_b) / (fig_c + fig_d) +
+  plot_annotation(
+    title = "Motor Vehicle Performance Analysis",
+    subtitle = "Analysis of mtcars dataset (n = 32)",
+    caption = "Figure 1. Relationship between vehicle characteristics and fuel efficiency.",
+    tag_levels = "A",
+    theme = theme(
+      plot.title = element_text(face = "bold", size = 14),
+      plot.subtitle = element_text(size = 11, color = "gray40"),
+      plot.caption = element_text(hjust = 0, size = 9)
+    )
+  )
+```
+
+## Exercise
+
+::: {.callout-caution title="Try It"}
+Create a 2x2 figure with `iris` data:
+
+- Panel A: Sepal.Length vs Sepal.Width scatter
+- Panel B: Petal.Length vs Petal.Width scatter
+- Panel C: Sepal.Length boxplot by Species
+- Panel D: Petal.Length boxplot by Species
+
+Add "A", "B", "C", "D" labels.
+:::
+
+::: {.callout-tip collapse="true" title="Solution"}
+```{r}
+pa <- ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
+  geom_point() + theme_classic() + theme(legend.position = "none")
+
+pb <- ggplot(iris, aes(Petal.Length, Petal.Width, color = Species)) +
+  geom_point() + theme_classic()
+
+pc <- ggplot(iris, aes(Species, Sepal.Length, fill = Species)) +
+  geom_boxplot() + theme_classic() + theme(legend.position = "none")
+
+pd <- ggplot(iris, aes(Species, Petal.Length, fill = Species)) +
+  geom_boxplot() + theme_classic() + theme(legend.position = "none")
+
+(pa + pb) / (pc + pd) +
+  plot_layout(guides = "collect") +
+  plot_annotation(tag_levels = "A")
+```
+:::
+
+---
+
+**Next:** [Case Study: Biomedical Analysis](03_case_study_dfu.qmd)

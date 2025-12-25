@@ -1,0 +1,190 @@
+---
+title: "Day 2 Exercises: Statistical Analysis"
+subtitle: "Instructor Version (Solutions)"
+format: html
+---
+
+```{r}
+#| label: setup
+#| include: false
+library(tidyverse)
+library(broom)
+```
+
+## Exercise 1: Descriptive Statistics
+
+### 1.1 Basic Statistics
+
+```{r}
+iris |>
+  summarize(
+    mean_sl = mean(Sepal.Length),
+    median_sl = median(Sepal.Length),
+    sd_sl = sd(Sepal.Length)
+  )
+```
+
+### 1.2 Group Statistics
+
+```{r}
+iris |>
+  group_by(Species) |>
+  summarize(
+    n = n(),
+    mean = mean(Sepal.Length),
+    sd = sd(Sepal.Length)
+  )
+```
+
+---
+
+## Exercise 2: t-tests
+
+### 2.1 One-Sample t-test
+
+```{r}
+t.test(iris$Sepal.Length, mu = 5.8)
+```
+
+**Interpretation**: p-value = 0.019 < 0.05, so we reject H0. The mean Sepal.Length is significantly different from 5.8.
+
+### 2.2 Two-Sample t-test
+
+```{r}
+setosa <- iris |> filter(Species == "setosa") |> pull(Sepal.Length)
+versicolor <- iris |> filter(Species == "versicolor") |> pull(Sepal.Length)
+
+t.test(setosa, versicolor)
+```
+
+**Interpretation**: p < 2.2e-16, so there is a significant difference in Sepal.Length between setosa and versicolor.
+
+### 2.3 Formula Syntax
+
+```{r}
+t.test(mpg ~ am, data = mtcars)
+```
+
+---
+
+## Exercise 3: ANOVA
+
+### 3.1 One-Way ANOVA
+
+```{r}
+model <- aov(Sepal.Length ~ Species, data = iris)
+summary(model)
+```
+
+### 3.2 Post-hoc Test
+
+```{r}
+TukeyHSD(model)
+```
+
+**Interpretation**: All three pairwise comparisons are significant (all p adj < 0.05). Virginica has the longest sepals, setosa the shortest.
+
+### 3.3 Visualization
+
+```{r}
+ggplot(iris, aes(x = Species, y = Sepal.Length, fill = Species)) +
+  geom_boxplot(alpha = 0.7) +
+  geom_jitter(width = 0.2, alpha = 0.5) +
+  labs(y = "Sepal Length (cm)") +
+  theme_classic() +
+  theme(legend.position = "none")
+```
+
+---
+
+## Exercise 4: Correlation
+
+### 4.1 Calculate Correlation
+
+```{r}
+cor(iris$Sepal.Length, iris$Petal.Length)
+```
+
+### 4.2 Correlation Test
+
+```{r}
+cor.test(iris$Sepal.Length, iris$Petal.Length)
+```
+
+**Interpretation**: r = 0.87, p < 2.2e-16. Strong positive correlation.
+
+### 4.3 Scatter Plot
+
+```{r}
+ggplot(iris, aes(x = Sepal.Length, y = Petal.Length)) +
+  geom_point(alpha = 0.7) +
+  geom_smooth(method = "lm", color = "red") +
+  labs(
+    title = "Sepal vs Petal Length",
+    x = "Sepal Length (cm)",
+    y = "Petal Length (cm)"
+  ) +
+  theme_classic()
+```
+
+---
+
+## Exercise 5: Regression
+
+### 5.1 Simple Linear Regression
+
+```{r}
+model <- lm(Petal.Length ~ Sepal.Length, data = iris)
+summary(model)
+```
+
+**Answers**:
+- R-squared = 0.76 (76% of variance explained)
+- Yes, significant (p < 2.2e-16)
+- Slope = 1.86: For each 1 cm increase in Sepal.Length, Petal.Length increases by 1.86 cm
+
+### 5.2 Multiple Regression
+
+```{r}
+model2 <- lm(mpg ~ wt + hp, data = mtcars)
+summary(model2)
+```
+
+### 5.3 Tidy Output
+
+```{r}
+tidy(model2)
+```
+
+---
+
+## Bonus Challenge
+
+```{r}
+# 1. Summary by supplement
+ToothGrowth |>
+  group_by(supp) |>
+  summarize(
+    n = n(),
+    mean_len = mean(len),
+    sd_len = sd(len)
+  )
+
+# 2. Boxplot
+ggplot(ToothGrowth, aes(x = supp, y = len, fill = supp)) +
+  geom_boxplot(alpha = 0.7) +
+  labs(
+    title = "Tooth Growth by Supplement Type",
+    x = "Supplement",
+    y = "Tooth Length"
+  ) +
+  theme_classic() +
+  theme(legend.position = "none")
+
+# 3. Statistical test
+t.test(len ~ supp, data = ToothGrowth)
+
+# 4. Interpretation: p = 0.06, marginally significant.
+# OJ appears to have slightly higher tooth growth but
+# the difference is not statistically significant at alpha = 0.05.
+```

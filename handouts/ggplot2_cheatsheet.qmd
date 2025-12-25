@@ -1,0 +1,226 @@
+---
+title: "ggplot2 Quick Reference"
+subtitle: "Data Visualization Cheatsheet"
+format:
+  html:
+    toc: true
+  pdf:
+    toc: false
+---
+
+## Basic Template
+
+```r
+library(ggplot2)
+
+ggplot(data, aes(x = var1, y = var2)) +
+  geom_***()
+```
+
+## Common Geoms
+
+### Scatter Plot
+```r
+ggplot(data, aes(x = x, y = y)) +
+  geom_point()
+```
+
+### Line Plot
+```r
+ggplot(data, aes(x = time, y = value)) +
+  geom_line()
+```
+
+### Bar Chart
+```r
+# Count
+ggplot(data, aes(x = category)) +
+  geom_bar()
+
+# With values
+ggplot(data, aes(x = category, y = value)) +
+  geom_col()
+```
+
+### Box Plot
+```r
+ggplot(data, aes(x = group, y = value)) +
+  geom_boxplot()
+```
+
+### Histogram
+```r
+ggplot(data, aes(x = value)) +
+  geom_histogram(bins = 30)
+```
+
+### Density
+```r
+ggplot(data, aes(x = value)) +
+  geom_density()
+```
+
+### Violin Plot
+```r
+ggplot(data, aes(x = group, y = value)) +
+  geom_violin()
+```
+
+## Aesthetics
+
+### Inside aes() - Map to data
+```r
+aes(x = wt, y = mpg, color = cyl, size = hp, shape = gear)
+```
+
+### Outside aes() - Fixed values
+```r
+geom_point(color = "red", size = 3, alpha = 0.5)
+```
+
+### Common Aesthetics
+| Aesthetic | Description |
+|-----------|-------------|
+| `x`, `y` | Position |
+| `color` | Point/line color |
+| `fill` | Fill color |
+| `size` | Point size |
+| `shape` | Point shape |
+| `alpha` | Transparency |
+| `linetype` | Line type |
+
+## Adding Layers
+
+### Trend Lines
+```r
+geom_smooth(method = "lm")      # Linear
+geom_smooth(method = "loess")   # Smooth curve
+geom_smooth(se = FALSE)         # No confidence band
+```
+
+### Reference Lines
+```r
+geom_hline(yintercept = 50)
+geom_vline(xintercept = 10)
+geom_abline(slope = 1, intercept = 0)
+```
+
+### Text/Labels
+```r
+geom_text(aes(label = name))
+geom_label(aes(label = name))
+```
+
+### Error Bars
+```r
+geom_errorbar(aes(ymin = mean - se, ymax = mean + se), width = 0.2)
+```
+
+## Faceting
+
+### By Rows
+```r
+facet_grid(rows ~ .)
+```
+
+### By Columns
+```r
+facet_grid(. ~ cols)
+```
+
+### Wrap
+```r
+facet_wrap(~variable, ncol = 3)
+```
+
+## Scales
+
+### Color/Fill
+```r
+scale_color_manual(values = c("red", "blue"))
+scale_fill_brewer(palette = "Set1")
+scale_color_viridis_d()  # Colorblind-friendly
+```
+
+### Axes
+```r
+scale_x_continuous(limits = c(0, 100))
+scale_y_log10()
+scale_x_discrete(labels = c("A", "B", "C"))
+```
+
+## Labels
+
+```r
+labs(
+  title = "Main Title",
+  subtitle = "Subtitle",
+  x = "X-axis Label",
+  y = "Y-axis Label",
+  color = "Legend Title",
+  caption = "Source: data"
+)
+```
+
+## Themes
+
+### Built-in Themes
+```r
+theme_classic()    # Clean, no gridlines
+theme_minimal()    # Minimal
+theme_bw()         # Black and white
+theme_void()       # Empty
+```
+
+### Custom Theme Elements
+```r
+theme(
+  plot.title = element_text(face = "bold", size = 14),
+  axis.title = element_text(face = "bold"),
+  legend.position = "bottom",
+  panel.grid = element_blank()
+)
+```
+
+### Legend Position
+```r
+theme(legend.position = "bottom")  # bottom, top, left, right
+theme(legend.position = "none")    # Remove legend
+theme(legend.position = c(0.8, 0.8))  # Coordinates
+```
+
+## Saving Plots
+
+```r
+ggsave("figure.png", width = 8, height = 6, dpi = 300)
+ggsave("figure.pdf", width = 8, height = 6)
+ggsave("figure.tiff", width = 6, height = 4, dpi = 300, compression = "lzw")
+```
+
+## Colorblind-Friendly Palette
+
+```r
+okabe_ito <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442",
+               "#0072B2", "#D55E00", "#CC79A7", "#999999")
+
+scale_color_manual(values = okabe_ito)
+```
+
+## Complete Example
+
+```r
+ggplot(mtcars, aes(x = wt, y = mpg, color = factor(cyl))) +
+  geom_point(size = 3, alpha = 0.8) +
+  geom_smooth(method = "lm", se = FALSE) +
+  scale_color_brewer(palette = "Set1", name = "Cylinders") +
+  labs(
+    title = "Fuel Efficiency vs Weight",
+    x = "Weight (1000 lbs)",
+    y = "Miles per Gallon"
+  ) +
+  theme_classic() +
+  theme(
+    legend.position = c(0.85, 0.85),
+    plot.title = element_text(face = "bold")
+  )
+```

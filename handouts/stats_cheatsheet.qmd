@@ -1,0 +1,232 @@
+---
+title: "Statistical Tests Quick Reference"
+subtitle: "R Statistics Cheatsheet"
+format:
+  html:
+    toc: true
+  pdf:
+    toc: false
+---
+
+## Choosing the Right Test
+
+| Data Type | Groups | Test |
+|-----------|--------|------|
+| Continuous | 1 sample vs value | One-sample t-test |
+| Continuous | 2 independent groups | Two-sample t-test |
+| Continuous | 2 paired groups | Paired t-test |
+| Continuous | 3+ groups | One-way ANOVA |
+| Continuous | 2 variables | Correlation/Regression |
+| Categorical | 2 categories | Chi-square test |
+
+## Descriptive Statistics
+
+```r
+# Basic stats
+mean(x, na.rm = TRUE)
+median(x, na.rm = TRUE)
+sd(x, na.rm = TRUE)
+var(x, na.rm = TRUE)
+min(x); max(x); range(x)
+quantile(x, probs = c(0.25, 0.5, 0.75))
+
+# Summary
+summary(data)
+
+# By group
+data |>
+  group_by(group) |>
+  summarize(
+    n = n(),
+    mean = mean(outcome),
+    sd = sd(outcome),
+    se = sd / sqrt(n)
+  )
+```
+
+## t-tests
+
+### One-Sample t-test
+*Is the mean different from a specific value?*
+
+```r
+t.test(x, mu = 100)
+```
+
+### Two-Sample t-test (Independent)
+*Do two groups have different means?*
+
+```r
+# Two vectors
+t.test(group1, group2)
+
+# Formula syntax
+t.test(outcome ~ group, data = data)
+
+# Assume equal variance
+t.test(outcome ~ group, data = data, var.equal = TRUE)
+```
+
+### Paired t-test
+*Before/after measurements on same subjects*
+
+```r
+t.test(before, after, paired = TRUE)
+```
+
+## ANOVA
+
+### One-Way ANOVA
+*Compare means across 3+ groups*
+
+```r
+model <- aov(outcome ~ group, data = data)
+summary(model)
+```
+
+### Post-hoc Test (Tukey's HSD)
+*Which groups differ?*
+
+```r
+TukeyHSD(model)
+```
+
+### Two-Way ANOVA
+*Two factors*
+
+```r
+model <- aov(outcome ~ factor1 * factor2, data = data)
+summary(model)
+```
+
+## Correlation
+
+### Pearson Correlation
+*Linear relationship between continuous variables*
+
+```r
+cor(x, y)
+cor.test(x, y)
+```
+
+### Spearman Correlation
+*Ranked/ordinal data*
+
+```r
+cor.test(x, y, method = "spearman")
+```
+
+### Correlation Matrix
+```r
+cor(data[, c("var1", "var2", "var3")])
+```
+
+## Linear Regression
+
+### Simple Regression
+*One predictor*
+
+```r
+model <- lm(y ~ x, data = data)
+summary(model)
+```
+
+### Multiple Regression
+*Multiple predictors*
+
+```r
+model <- lm(y ~ x1 + x2 + x3, data = data)
+summary(model)
+```
+
+### Tidy Output with broom
+```r
+library(broom)
+tidy(model)    # Coefficients
+glance(model)  # Model stats
+augment(model) # Fitted values
+```
+
+## Checking Assumptions
+
+### Normality
+```r
+shapiro.test(x)                    # Shapiro-Wilk test
+qqnorm(x); qqline(x)               # Q-Q plot
+hist(x)                            # Histogram
+```
+
+### Homogeneity of Variance
+```r
+bartlett.test(outcome ~ group, data = data)
+car::leveneTest(outcome ~ group, data = data)
+```
+
+### Residual Diagnostics
+```r
+plot(model)  # Four diagnostic plots
+```
+
+## Non-parametric Alternatives
+
+| Parametric | Non-parametric |
+|------------|----------------|
+| One-sample t | `wilcox.test(x, mu = ...)` |
+| Two-sample t | `wilcox.test(x, y)` |
+| Paired t | `wilcox.test(x, y, paired = TRUE)` |
+| ANOVA | `kruskal.test(outcome ~ group, data)` |
+| Correlation | `cor.test(x, y, method = "spearman")` |
+
+## Chi-Square Test
+
+### Test of Independence
+```r
+table <- table(data$var1, data$var2)
+chisq.test(table)
+```
+
+### Goodness of Fit
+```r
+chisq.test(observed, p = expected_proportions)
+```
+
+## Interpreting P-values
+
+| P-value | Interpretation |
+|---------|----------------|
+| p < 0.001 | Highly significant (***) |
+| p < 0.01 | Very significant (**) |
+| p < 0.05 | Significant (*) |
+| p >= 0.05 | Not significant |
+
+## Interpreting Correlation (r)
+
+| |r| | Strength |
+|-----|----------|
+| 0.0 - 0.3 | Weak |
+| 0.3 - 0.5 | Moderate |
+| 0.5 - 0.7 | Strong |
+| 0.7 - 1.0 | Very strong |
+
+## Interpreting R-squared
+
+R² = proportion of variance explained by the model
+
+- R² = 0.50 means 50% of variance is explained
+- Higher is better (0 to 1)
+- Adjusted R² accounts for number of predictors
+
+## Quick Decision Tree
+
+```
+Is your outcome continuous?
+├── Yes
+│   ├── Comparing to a value? → One-sample t-test
+│   ├── Comparing 2 groups?
+│   │   ├── Same subjects? → Paired t-test
+│   │   └── Different subjects? → Two-sample t-test
+│   ├── Comparing 3+ groups? → ANOVA
+│   └── Relationship with another variable? → Correlation/Regression
+└── No (categorical)
+    └── Comparing proportions? → Chi-square test
+```

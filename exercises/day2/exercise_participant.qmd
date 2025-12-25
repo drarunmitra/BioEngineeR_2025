@@ -1,0 +1,192 @@
+---
+title: "Day 2 Exercises: Statistical Analysis"
+subtitle: "Participant Version"
+format: html
+---
+
+```{r}
+#| label: setup
+#| include: false
+library(tidyverse)
+```
+
+## Exercise 1: Descriptive Statistics
+
+Using the `iris` dataset:
+
+### 1.1 Basic Statistics
+
+Calculate mean, median, and SD for Sepal.Length:
+
+```{r}
+iris |>
+  summarize(
+    mean_sl = ___,
+    median_sl = ___,
+    sd_sl = ___
+  )
+```
+
+### 1.2 Group Statistics
+
+Calculate summary statistics for Sepal.Length BY Species:
+
+```{r}
+iris |>
+  group_by(___) |>
+  summarize(
+    n = n(),
+    mean = ___,
+    sd = ___
+  )
+```
+
+---
+
+## Exercise 2: t-tests
+
+### 2.1 One-Sample t-test
+
+Test if mean Sepal.Length differs from 5.8:
+
+```{r}
+t.test(iris$Sepal.Length, mu = ___)
+```
+
+**Interpretation**: Is the p-value < 0.05? What do you conclude?
+
+### 2.2 Two-Sample t-test
+
+Compare Sepal.Length between setosa and versicolor:
+
+```{r}
+# Filter data
+setosa <- iris |> filter(Species == "setosa") |> pull(Sepal.Length)
+versicolor <- iris |> filter(Species == "versicolor") |> pull(Sepal.Length)
+
+# Run t-test
+t.test(___, ___)
+```
+
+### 2.3 Formula Syntax
+
+Using mtcars, test if mpg differs by transmission type (am):
+
+```{r}
+t.test(___ ~ ___, data = ___)
+```
+
+---
+
+## Exercise 3: ANOVA
+
+### 3.1 One-Way ANOVA
+
+Test if Sepal.Length differs across all 3 iris Species:
+
+```{r}
+model <- aov(___ ~ ___, data = ___)
+summary(model)
+```
+
+### 3.2 Post-hoc Test
+
+Run Tukey's HSD to find which species differ:
+
+```{r}
+TukeyHSD(___)
+```
+
+**Interpretation**: Which pairs of species are significantly different?
+
+### 3.3 Visualization
+
+Create a boxplot to visualize the differences:
+
+```{r}
+ggplot(iris, aes(x = ___, y = ___, fill = ___)) +
+  geom_boxplot() +
+  theme_classic()
+```
+
+---
+
+## Exercise 4: Correlation
+
+### 4.1 Calculate Correlation
+
+Find the correlation between Sepal.Length and Petal.Length in iris:
+
+```{r}
+cor(iris$___, iris$___)
+```
+
+### 4.2 Correlation Test
+
+Test if the correlation is significant:
+
+```{r}
+cor.test(___, ___)
+```
+
+### 4.3 Scatter Plot
+
+Visualize the relationship:
+
+```{r}
+ggplot(iris, aes(x = Sepal.Length, y = Petal.Length)) +
+  geom_point() +
+  geom_smooth(method = "___") +
+  theme_classic()
+```
+
+---
+
+## Exercise 5: Regression
+
+### 5.1 Simple Linear Regression
+
+Predict Petal.Length from Sepal.Length:
+
+```{r}
+model <- lm(___ ~ ___, data = ___)
+summary(model)
+```
+
+**Questions**:
+- What is the R-squared value?
+- Is the relationship significant?
+- What does the slope mean?
+
+### 5.2 Multiple Regression
+
+Using mtcars, predict mpg from wt and hp:
+
+```{r}
+model2 <- lm(___ ~ ___ + ___, data = mtcars)
+summary(model2)
+```
+
+### 5.3 Tidy Output
+
+Use broom to get tidy coefficient table:
+
+```{r}
+library(broom)
+tidy(___)
+```
+
+---
+
+## Bonus Challenge
+
+Perform a complete analysis on the `ToothGrowth` dataset:
+
+1. Summarize tooth length by supplement type
+2. Create a boxplot
+3. Run an appropriate statistical test
+4. Interpret your findings
+
+```{r}
+# Your code here
+```

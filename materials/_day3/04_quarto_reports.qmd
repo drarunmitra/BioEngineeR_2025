@@ -1,0 +1,310 @@
+---
+title: "Quarto Reports"
+subtitle: "Reproducible Documents"
+---
+
+```{r}
+#| label: setup
+#| include: false
+library(tidyverse)
+```
+
+## Learning Objectives
+
+1. Understand Quarto document structure
+2. Use code chunks effectively
+3. Create reproducible reports
+
+## What is Quarto?
+
+- Next-generation R Markdown
+- Supports R, Python, Julia, Observable
+- Multiple output formats (HTML, PDF, Word, slides)
+- Used for this entire workshop!
+
+## Document Structure
+
+```markdown
+---
+title: "My Analysis"
+author: "Your Name"
+date: today
+format: html
+---
+
+## Introduction
+
+Text goes here.
+```
+
+## Code Chunks
+
+### Basic Chunk
+
+````markdown
+```{{r}}
+summary(mtcars)
+```
+````
+
+### Chunk Options
+
+````markdown
+```{{r}}
+#| label: my-plot
+#| fig-width: 8
+#| fig-height: 6
+#| fig-cap: "Scatter plot of weight vs mpg"
+
+ggplot(mtcars, aes(wt, mpg)) +
+  geom_point()
+```
+````
+
+## Common Chunk Options
+
+| Option | Purpose | Example |
+|--------|---------|---------|
+| `label` | Name the chunk | `#| label: setup` |
+| `echo` | Show code | `#| echo: false` |
+| `eval` | Run code | `#| eval: false` |
+| `include` | Show anything | `#| include: false` |
+| `warning` | Show warnings | `#| warning: false` |
+| `message` | Show messages | `#| message: false` |
+| `fig-width` | Figure width | `#| fig-width: 8` |
+| `fig-cap` | Figure caption | `#| fig-cap: "My figure"` |
+
+## Inline Code
+
+Use backticks with `r` for inline calculations:
+
+```markdown
+The mean mpg is `r knitr::inline_expr("mean(mtcars$mpg)")`.
+```
+
+Renders as: The mean mpg is `r round(mean(mtcars$mpg), 1)`.
+
+## Cross-References
+
+### Figures
+
+````markdown
+```{{r}}
+#| label: fig-scatter
+#| fig-cap: "MPG vs Weight"
+
+ggplot(mtcars, aes(wt, mpg)) + geom_point()
+```
+
+See @fig-scatter for the relationship.
+````
+
+### Tables
+
+````markdown
+```{{r}}
+#| label: tbl-summary
+#| tbl-cap: "Summary statistics"
+
+mtcars |> summarize(mean_mpg = mean(mpg)) |> knitr::kable()
+```
+
+See @tbl-summary for details.
+````
+
+## Callout Boxes
+
+::: {.callout-note}
+This is a note callout.
+:::
+
+::: {.callout-tip}
+This is a tip callout.
+:::
+
+::: {.callout-warning}
+This is a warning callout.
+:::
+
+::: {.callout-caution}
+This is a caution callout.
+:::
+
+```markdown
+::: {.callout-note}
+This is a note callout.
+:::
+```
+
+## Collapsible Content
+
+::: {.callout-tip collapse="true" title="Click to expand"}
+This content is hidden by default!
+:::
+
+```markdown
+::: {.callout-tip collapse="true" title="Click to expand"}
+Hidden content here.
+:::
+```
+
+## Tabbed Sections
+
+::: {.panel-tabset}
+
+### R Code
+
+```{r}
+mean(mtcars$mpg)
+```
+
+### Python Equivalent
+
+```python
+import pandas as pd
+mtcars = pd.read_csv("mtcars.csv")
+mtcars["mpg"].mean()
+```
+
+:::
+
+````markdown
+::: {.panel-tabset}
+
+### R Code
+```{{r}}
+mean(mtcars$mpg)
+```
+
+### Python
+```{{python}}
+# Python code
+```
+
+:::
+````
+
+## Output Formats
+
+### HTML (default)
+
+```yaml
+format: html
+```
+
+### PDF (requires LaTeX)
+
+```yaml
+format: pdf
+```
+
+### Word
+
+```yaml
+format: docx
+```
+
+### Multiple Formats
+
+```yaml
+format:
+  html: default
+  pdf: default
+  docx: default
+```
+
+## Report Template
+
+```yaml
+---
+title: "Analysis Report"
+author: "Your Name"
+date: today
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    code-fold: true
+    theme: cosmo
+execute:
+  warning: false
+  message: false
+---
+```
+
+## Rendering
+
+From terminal:
+```bash
+quarto render report.qmd
+```
+
+From R:
+```r
+quarto::quarto_render("report.qmd")
+```
+
+In RStudio: Click "Render" button or Ctrl/Cmd + Shift + K
+
+## Best Practices
+
+1. **Name all chunks** with descriptive labels
+2. **Set global options** in YAML header
+3. **Use `here::here()`** for file paths
+4. **Load packages** in setup chunk
+5. **Set seed** for reproducibility
+6. **Cache** long computations
+
+## Exercise
+
+::: {.callout-caution title="Try It"}
+Create a simple Quarto document that:
+
+1. Loads the iris dataset
+2. Shows a summary table
+3. Creates a figure with caption
+4. Uses at least one callout box
+:::
+
+::: {.callout-tip collapse="true" title="Solution"}
+````markdown
+---
+title: "Iris Analysis"
+format: html
+---
+
+## Data Overview
+
+```{{r}}
+#| label: setup
+library(tidyverse)
+```
+
+::: {.callout-note}
+The iris dataset contains 150 observations of 3 species.
+:::
+
+```{{r}}
+#| label: tbl-summary
+#| tbl-cap: "Iris summary by species"
+iris |>
+  group_by(Species) |>
+  summarize(across(everything(), mean)) |>
+  knitr::kable(digits = 2)
+```
+
+```{{r}}
+#| label: fig-iris
+#| fig-cap: "Sepal dimensions by species"
+ggplot(iris, aes(Sepal.Length, Sepal.Width, color = Species)) +
+  geom_point() +
+  theme_classic()
+```
+
+See @fig-iris for the scatter plot and @tbl-summary for means.
+````
+:::
+
+---
+
+**Next:** [Mini Project](05_mini_project.qmd)

@@ -1,0 +1,209 @@
+---
+title: "Day 1: R Foundations"
+subtitle: "Morning Session | Data Analysis with R"
+author: "IISc Bio Engineering Workshop"
+date: "January 6, 2025"
+format:
+  revealjs:
+    theme: [default, ../styles/custom.scss]
+    slide-number: true
+    code-line-numbers: false
+    highlight-style: github
+    transition: fade
+    width: 1280
+    height: 720
+---
+
+## Welcome! {.center}
+
+### Data Analysis with R
+**3-Day Workshop | IISc Bio Engineering**
+
+January 6-8, 2025
+
+::: {.notes}
+Welcome everyone! Take attendance, ensure everyone has R and RStudio installed.
+:::
+
+## Agenda: Day 1
+
+| Time | Topic |
+|------|-------|
+| 09:00 | Welcome & Setup |
+| 09:30 | R Fundamentals |
+| 10:30 | Break |
+| 10:45 | Data Import |
+| 11:30 | Tidyverse Introduction |
+| 12:30 | Lunch |
+| 14:00 | Data Wrangling |
+| 15:30 | ggplot2 Basics |
+| 17:00 | Day 1 Wrap-up |
+
+## Why R?
+
+- **Free & open source**
+- **Reproducible research**
+- **Active community** (Bioconductor, CRAN)
+- **Publication-quality graphics**
+- **Statistical heritage**
+
+::: {.notes}
+Emphasize the biomedical research community's adoption of R.
+:::
+
+## RStudio Interface
+
+```{r}
+#| echo: false
+#| fig-align: center
+knitr::include_graphics("https://rstudio.github.io/cheatsheets/html/images/rstudio-ide.png")
+```
+
+Four panes: Source, Console, Environment, Files/Plots
+
+## R as a Calculator
+
+```{r}
+#| echo: true
+2 + 2
+sqrt(16)
+log10(1000)
+```
+
+## Variables
+
+```{r}
+#| echo: true
+patient_age <- 45
+drug_dose <- 2.5
+sample_name <- "Sample_001"
+
+patient_age
+```
+
+Use `<-` for assignment (Alt/Option + -)
+
+## Vectors
+
+```{r}
+#| echo: true
+ages <- c(23, 45, 67, 34, 56)
+mean(ages)
+length(ages)
+```
+
+## Data Frames
+
+```{r}
+#| echo: true
+patients <- data.frame(
+  id = c("P001", "P002", "P003"),
+  age = c(45, 32, 67),
+  group = c("Treatment", "Control", "Treatment")
+)
+patients
+```
+
+## Quick Exercise {.center}
+
+Create a vector of 5 body weights and calculate:
+
+1. The mean
+2. The standard deviation
+3. The range
+
+```{r}
+#| echo: true
+#| eval: false
+weights <- c(70, 65, 80, 75, 68)
+mean(weights)
+sd(weights)
+range(weights)
+```
+
+## Break Time! {.center}
+
+### 15 minutes
+
+☕ Grab a coffee
+
+🤔 Questions so far?
+
+## Data Import
+
+### The `here` Package
+
+```{r}
+#| echo: true
+#| eval: false
+library(here)
+data <- read_csv(here("data", "patients.csv"))
+```
+
+- Works across operating systems
+- Finds project root automatically
+
+## Reading CSV Files
+
+```{r}
+#| echo: true
+#| eval: false
+library(readr)
+
+# Basic read
+data <- read_csv("data/myfile.csv")
+
+# With options
+data <- read_csv("data/myfile.csv",
+                 na = c("", "NA", "missing"))
+```
+
+## Examining Data
+
+```{r}
+#| echo: true
+glimpse(mtcars)
+```
+
+## The Tidyverse
+
+```{r}
+#| echo: true
+#| message: false
+library(tidyverse)
+```
+
+A collection of packages for data science:
+
+- **dplyr**: Data manipulation
+- **ggplot2**: Visualization
+- **tidyr**: Data tidying
+- **readr**: Data import
+
+## The Pipe Operator
+
+Traditional R:
+```{r}
+#| echo: true
+round(mean(mtcars$mpg), 2)
+```
+
+With pipe:
+```{r}
+#| echo: true
+mtcars$mpg |> mean() |> round(2)
+```
+
+**Read as: "then"**
+
+## Coming Up: Afternoon
+
+- **dplyr** for data wrangling
+- **ggplot2** for visualization
+- Hands-on exercises
+
+## Lunch Break! {.center}
+
+### See you at 2:00 PM
+
+🍽️ Enjoy!

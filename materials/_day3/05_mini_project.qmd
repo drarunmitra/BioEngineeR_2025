@@ -1,0 +1,327 @@
+---
+title: "Mini Project"
+subtitle: "Putting It All Together"
+---
+
+```{r}
+#| label: setup
+#| include: false
+library(tidyverse)
+library(patchwork)
+```
+
+## Learning Objectives
+
+1. Complete an end-to-end analysis
+2. Create a reproducible report
+3. Practice all workshop skills
+
+## Your Task
+
+Create a complete analysis report using a dataset of your choice.
+
+## Dataset Options
+
+### Option 1: Built-in Datasets
+
+```{r}
+#| eval: false
+# Explore available datasets
+data()
+
+# Good choices:
+# - mtcars: Vehicle performance
+# - iris: Flower measurements
+# - ToothGrowth: Guinea pig teeth
+# - PlantGrowth: Plant experiment
+# - ChickWeight: Chick growth
+```
+
+### Option 2: Sample Biomedical Data
+
+```{r}
+# Generate sample clinical trial data
+set.seed(2025)
+
+clinical_trial <- tibble(
+  patient_id = paste0("PT", sprintf("%03d", 1:100)),
+  age = round(rnorm(100, 55, 12)),
+  sex = sample(c("M", "F"), 100, replace = TRUE),
+  treatment = sample(c("Placebo", "Low Dose", "High Dose"), 100, replace = TRUE),
+  baseline_score = round(rnorm(100, 50, 15)),
+  final_score = baseline_score + case_when(
+    treatment == "Placebo" ~ rnorm(100, 2, 8),
+    treatment == "Low Dose" ~ rnorm(100, 10, 10),
+    treatment == "High Dose" ~ rnorm(100, 18, 12)
+  ) |> round(),
+  adverse_event = sample(c(TRUE, FALSE), 100, replace = TRUE, prob = c(0.2, 0.8))
+) |>
+  mutate(
+    change = final_score - baseline_score,
+    responder = change > 10
+  )
+
+glimpse(clinical_trial)
+```
+
+### Option 3: Your Own Data
+
+Bring a CSV file and use:
+
+```{r}
+#| eval: false
+my_data <- read_csv("path/to/your/data.csv")
+```
+
+## Report Requirements
+
+Your report should include:
+
+### 1. Introduction
+
+- Brief description of the dataset
+- Research question(s)
+
+### 2. Methods
+
+- Data source
+- Statistical approaches used
+
+### 3. Results
+
+#### Descriptive Statistics
+
+```{r}
+clinical_trial |>
+  group_by(treatment) |>
+  summarize(
+    n = n(),
+    mean_age = mean(age),
+    pct_female = mean(sex == "F") * 100,
+    mean_change = mean(change),
+    pct_responder = mean(responder) * 100
+  ) |>
+  knitr::kable(digits = 1)
+```
+
+#### Visualization (minimum 2 figures)
+
+```{r}
+# Figure 1: Distribution
+p1 <- ggplot(clinical_trial, aes(x = treatment, y = change, fill = treatment)) +
+  geom_boxplot(alpha = 0.7) +
+  geom_jitter(width = 0.2, alpha = 0.5) +
+  labs(title = "Score Change by Treatment", y = "Change from Baseline") +
+  theme_classic() +
+  theme(legend.position = "none")
+
+# Figure 2: Response rate
+response_summary <- clinical_trial |>
+  group_by(treatment) |>
+  summarize(response_rate = mean(responder) * 100)
+
+p2 <- ggplot(response_summary, aes(x = treatment, y = response_rate, fill = treatment)) +
+  geom_col() +
+  geom_text(aes(label = paste0(round(response_rate), "%")), vjust = -0.5) +
+  labs(title = "Response Rate by Treatment", y = "Responders (%)") +
+  ylim(0, 100) +
+  theme_classic() +
+  theme(legend.position = "none")
+
+p1 + p2
+```
+
+#### Statistical Test
+
+```{r}
+# ANOVA
+model <- aov(change ~ treatment, data = clinical_trial)
+summary(model)
+
+# Post-hoc
+TukeyHSD(model)
+```
+
+### 4. Discussion
+
+- Key findings
+- Limitations
+- Conclusions
+
+## Report Template
+
+Create a new file called `my_analysis.qmd`:
+
+````markdown
+---
+title: "Your Analysis Title"
+author: "Your Name"
+date: today
+format:
+  html:
+    toc: true
+    code-fold: true
+execute:
+  warning: false
+  message: false
+---
+
+## Introduction
+
+[Describe your data and research question]
+
+## Methods
+
+```{{r}}
+#| label: setup
+library(tidyverse)
+library(patchwork)
+```
+
+```{{r}}
+#| label: load-data
+# Load or create your data
+```
+
+## Results
+
+### Descriptive Statistics
+
+```{{r}}
+#| label: tbl-summary
+#| tbl-cap: "Summary statistics"
+# Your summary table
+```
+
+### Visualization
+
+```{{r}}
+#| label: fig-main
+#| fig-cap: "Main results figure"
+#| fig-width: 10
+#| fig-height: 6
+# Your multi-panel figure
+```
+
+### Statistical Analysis
+
+```{{r}}
+#| label: stats
+# Your statistical tests
+```
+
+## Discussion
+
+[Interpret your findings]
+
+## References
+
+[If applicable]
+````
+
+## Checklist
+
+Before submitting, verify:
+
+- [ ] Document renders without errors
+- [ ] All figures have captions
+- [ ] All tables are formatted
+- [ ] Code is clean and commented
+- [ ] Results are interpreted
+- [ ] Reproducible (runs from fresh session)
+
+## Sharing Your Work
+
+### Export Options
+
+```{r}
+#| eval: false
+# Render to HTML
+quarto::quarto_render("my_analysis.qmd")
+
+# Render to PDF
+quarto::quarto_render("my_analysis.qmd", output_format = "pdf")
+```
+
+### Save Key Figures
+
+```{r}
+#| eval: false
+# Save publication figure
+ggsave("figures/main_figure.png", width = 10, height = 6, dpi = 300)
+ggsave("figures/main_figure.pdf", width = 10, height = 6)
+```
+
+## Example Complete Analysis
+
+::: {.callout-tip collapse="true" title="Full Example"}
+```{r}
+#| fig-width: 10
+#| fig-height: 8
+
+# Complete analysis of clinical trial data
+
+# 1. Summary statistics
+summary_stats <- clinical_trial |>
+  group_by(treatment) |>
+  summarize(
+    n = n(),
+    `Age (mean ± SD)` = paste0(round(mean(age), 1), " ± ", round(sd(age), 1)),
+    `% Female` = round(mean(sex == "F") * 100, 1),
+    `Baseline Score` = round(mean(baseline_score), 1),
+    `Final Score` = round(mean(final_score), 1),
+    `Change` = round(mean(change), 1),
+    `% Responders` = round(mean(responder) * 100, 1)
+  )
+
+knitr::kable(summary_stats, caption = "Patient Characteristics by Treatment Group")
+
+# 2. Multi-panel figure
+fig_a <- ggplot(clinical_trial, aes(x = baseline_score, y = final_score, color = treatment)) +
+  geom_point(alpha = 0.7) +
+  geom_abline(intercept = 0, slope = 1, linetype = "dashed") +
+  labs(title = "Baseline vs Final Score", x = "Baseline", y = "Final") +
+  theme_classic()
+
+fig_b <- ggplot(clinical_trial, aes(x = treatment, y = change, fill = treatment)) +
+  geom_boxplot(alpha = 0.7) +
+  geom_hline(yintercept = 10, linetype = "dashed", color = "red") +
+  labs(title = "Change from Baseline", x = NULL, y = "Change") +
+  theme_classic() +
+  theme(legend.position = "none")
+
+fig_c <- clinical_trial |>
+  group_by(treatment) |>
+  summarize(rate = mean(responder) * 100) |>
+  ggplot(aes(x = treatment, y = rate, fill = treatment)) +
+  geom_col() +
+  labs(title = "Response Rate", x = NULL, y = "Responders (%)") +
+  theme_classic() +
+  theme(legend.position = "none")
+
+fig_d <- ggplot(clinical_trial, aes(x = age, y = change, color = treatment)) +
+  geom_point(alpha = 0.5) +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(title = "Age vs Treatment Response", x = "Age", y = "Change") +
+  theme_classic()
+
+(fig_a + fig_b) / (fig_c + fig_d) +
+  plot_layout(guides = "collect") +
+  plot_annotation(
+    title = "Clinical Trial Results",
+    tag_levels = "A"
+  ) &
+  theme(legend.position = "bottom")
+
+# 3. Statistical test
+cat("\n--- ANOVA Results ---\n")
+model <- aov(change ~ treatment, data = clinical_trial)
+print(summary(model))
+```
+:::
+
+---
+
+**Workshop Complete!**
+
+Thank you for participating. Continue practicing with your own data!

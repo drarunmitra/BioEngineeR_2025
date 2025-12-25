@@ -1,0 +1,105 @@
+---
+title: "Correlation & Regression"
+subtitle: "Relationships Between Variables"
+---
+
+```{r}
+#| label: setup
+#| include: false
+library(tidyverse)
+library(broom)
+```
+
+## Learning Objectives
+
+1. Calculate and interpret correlation
+2. Fit simple linear regression
+3. Interpret regression output
+
+## Correlation
+
+Measures the strength and direction of a linear relationship.
+
+```{r}
+# Using mtcars
+cor(mtcars$wt, mtcars$mpg)
+
+# Correlation test
+cor.test(mtcars$wt, mtcars$mpg)
+```
+
+### Interpretation
+
+| r | Strength |
+|---|----------|
+| 0.0 - 0.3 | Weak |
+| 0.3 - 0.7 | Moderate |
+| 0.7 - 1.0 | Strong |
+
+### Visualization
+
+```{r}
+ggplot(mtcars, aes(x = wt, y = mpg)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = TRUE) +
+  labs(title = "MPG vs Weight", x = "Weight (1000 lbs)", y = "MPG") +
+  theme_classic()
+```
+
+## Simple Linear Regression
+
+Predicting one variable from another:
+
+$$y = \beta_0 + \beta_1 x + \epsilon$$
+
+```{r}
+model <- lm(mpg ~ wt, data = mtcars)
+summary(model)
+```
+
+### Interpretation
+
+- **Intercept**: Expected mpg when weight = 0
+- **wt coefficient**: Change in mpg per unit increase in weight
+- **R-squared**: Proportion of variance explained
+- **p-value**: Significance of coefficient
+
+## Tidy Output with broom
+
+```{r}
+library(broom)
+
+# Coefficients
+tidy(model)
+
+# Model statistics
+glance(model)
+```
+
+## Multiple Regression
+
+```{r}
+model2 <- lm(mpg ~ wt + hp + cyl, data = mtcars)
+tidy(model2)
+```
+
+## Exercise
+
+::: {.callout-caution title="Try It"}
+1. Calculate correlation between Sepal.Length and Petal.Length in `iris`
+2. Fit a regression model
+3. What's the R-squared?
+:::
+
+::: {.callout-tip collapse="true" title="Solution"}
+```{r}
+cor(iris$Sepal.Length, iris$Petal.Length)
+
+model <- lm(Petal.Length ~ Sepal.Length, data = iris)
+summary(model)  # R-squared = 0.76
+```
+:::
+
+---
+
+**Next:** [Your Data Workshop](06_your_data_workshop.qmd)

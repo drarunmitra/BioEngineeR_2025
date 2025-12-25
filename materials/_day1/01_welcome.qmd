@@ -1,0 +1,74 @@
+---
+title: "Welcome to the Workshop"
+subtitle: "Getting Started with R"
+---
+
+## Learning Objectives
+
+By the end of this module, you will:
+
+1. Understand why R is valuable for biomedical research
+2. Navigate the RStudio interface confidently
+3. Know how this workshop is structured
+
+## Why R?
+
+- **Free and open source** - No license costs
+- **Reproducible research** - Script everything
+- **Powerful visualization** - Publication-quality figures
+- **Active community** - Thousands of packages
+- **Industry standard** - Used in pharma, biotech, academia
+
+## RStudio Interface
+
+```
++------------------+------------------+
+|     Source       |   Environment    |
+|    (Scripts)     |   (Variables)    |
++------------------+------------------+
+|     Console      |      Files/      |
+|   (Run code)     |  Plots/Help      |
++------------------+------------------+
+```
+
+### Key Panels
+
+- **Source**: Write and save R scripts
+- **Console**: Execute code interactively
+- **Environment**: View your data and variables
+- **Files/Plots/Help**: Navigate files, view plots, get help
+
+## Your First R Commands
+
+```{r}
+# Basic math
+2 + 2
+10 / 3
+
+# Create a variable
+my_age <- 25
+my_age
+
+# Use a function
+sqrt(16)
+```
+
+## Workshop Structure
+
+| Day | Morning | Afternoon |
+|-----|---------|-----------|
+| 1 | R Basics, Data Import | Tidyverse, ggplot2 |
+| 2 | Statistics, t-tests | ANOVA, Regression |
+| 3 | Figures, Quarto | Mini-Project |
+
+## Getting Help
+
+```{r}
+#| eval: false
+?mean           # Help for a function
+??regression    # Search help
+```
+
+---
+
+**Next:** [R Fundamentals](02_r_fundamentals.qmd)

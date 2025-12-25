@@ -1,0 +1,50 @@
+# R
+.Rproj.user/
+.Rhistory
+.RData
+.Ruserdata
+*.Rproj
+
+# Quarto
+/.quarto/
+/_output/
+/_freeze/
+*_files/
+*_cache/
+*.html
+!index.html
+
+# Generated data
+data/generated/*.csv
+data/generated/*.rds
+!data/generated/.gitkeep
+
+# Figures
+figures/*.png
+figures/*.pdf
+!figures/.gitkeep
+
+# Admin private files
+admin/participants/
+admin/*_roster*
+admin/*_private*
+*_roster*
+*_grades*
+participant*.csv
+
+# OS
+.DS_Store
+Thumbs.db
+*~
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Environment
+.env
+.Renviron
+
+# Slides HTML
+slides/*.html

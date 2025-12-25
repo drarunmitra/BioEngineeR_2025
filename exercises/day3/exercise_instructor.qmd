@@ -1,0 +1,202 @@
+---
+title: "Day 3 Exercises: Publication Figures"
+subtitle: "Instructor Version (Solutions)"
+format: html
+---
+
+```{r}
+#| label: setup
+#| include: false
+library(tidyverse)
+library(patchwork)
+```
+
+## Exercise 1: Publication Theme
+
+### 1.1 Create a Custom Theme
+
+```{r}
+theme_pub <- function(base_size = 12) {
+  theme_classic(base_size = base_size) +
+    theme(
+      plot.title = element_text(face = "bold", hjust = 0),
+      axis.title = element_text(face = "bold"),
+      panel.border = element_rect(fill = NA, color = "black"),
+      legend.position = "bottom"
+    )
+}
+```
+
+### 1.2 Apply the Theme
+
+```{r}
+ggplot(mtcars, aes(x = wt, y = mpg, color = factor(cyl))) +
+  geom_point(size = 3) +
+  labs(
+    title = "Fuel Efficiency vs Vehicle Weight",
+    x = "Weight (1000 lbs)",
+    y = "Miles per Gallon",
+    color = "Cylinders"
+  ) +
+  theme_pub()
+```
+
+---
+
+## Exercise 2: Colorblind-Friendly Colors
+
+```{r}
+okabe_ito <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442",
+               "#0072B2", "#D55E00", "#CC79A7", "#999999")
+
+ggplot(iris, aes(x = Species, y = Sepal.Length, fill = Species)) +
+  geom_boxplot() +
+  scale_fill_manual(values = okabe_ito[1:3]) +
+  theme_classic() +
+  theme(legend.position = "none")
+```
+
+---
+
+## Exercise 3: Multi-Panel Figures
+
+### 3.1 Create Component Plots
+
+```{r}
+p1 <- ggplot(mtcars, aes(wt, mpg)) +
+  geom_point() +
+  labs(title = "Weight vs MPG") +
+  theme_classic()
+
+p2 <- ggplot(mtcars, aes(factor(cyl), mpg)) +
+  geom_boxplot() +
+  labs(title = "MPG by Cylinders", x = "Cylinders") +
+  theme_classic()
+
+p3 <- ggplot(mtcars, aes(mpg)) +
+  geom_histogram(bins = 10, fill = "steelblue") +
+  labs(title = "MPG Distribution") +
+  theme_classic()
+```
+
+### 3.2 Combine Side by Side
+
+```{r}
+p1 + p2
+```
+
+### 3.3 Stack Vertically
+
+```{r}
+p1 / p2
+```
+
+### 3.4 Complex Layout
+
+```{r}
+(p1 + p2) / p3
+```
+
+### 3.5 Add Panel Labels
+
+```{r}
+(p1 + p2) / p3 +
+  plot_annotation(tag_levels = "A")
+```
+
+---
+
+## Exercise 4: Complete Figure
+
+```{r}
+#| fig-width: 10
+#| fig-height: 8
+
+# Panel A
+fig_a <- ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, color = Species)) +
+  geom_point(alpha = 0.7) +
+  labs(x = "Sepal Length (cm)", y = "Sepal Width (cm)") +
+  theme_classic() +
+  theme(legend.position = "none")
+
+# Panel B
+fig_b <- ggplot(iris, aes(x = Petal.Length, y = Petal.Width, color = Species)) +
+  geom_point(alpha = 0.7) +
+  labs(x = "Petal Length (cm)", y = "Petal Width (cm)") +
+  theme_classic()
+
+# Panel C
+fig_c <- ggplot(iris, aes(x = Species, y = Sepal.Length, fill = Species)) +
+  geom_boxplot(alpha = 0.7) +
+  labs(y = "Sepal Length (cm)") +
+  theme_classic() +
+  theme(legend.position = "none")
+
+# Panel D
+fig_d <- ggplot(iris, aes(x = Species, y = Petal.Length, fill = Species)) +
+  geom_boxplot(alpha = 0.7) +
+  labs(y = "Petal Length (cm)") +
+  theme_classic() +
+  theme(legend.position = "none")
+
+# Combine
+(fig_a + fig_b) / (fig_c + fig_d) +
+  plot_layout(guides = "collect") +
+  plot_annotation(
+    title = "Iris Dataset: Morphological Measurements",
+    tag_levels = "A"
+  ) &
+  theme(plot.tag = element_text(face = "bold", size = 14))
+```
+
+---
+
+## Exercise 5: Export Figure
+
+```{r}
+#| eval: false
+# Save as high-resolution TIFF
+ggsave(
+  filename = "figure_iris.tiff",
+  width = 10,
+  height = 8,
+  dpi = 300,
+  compression = "lzw"
+)
+
+# Save as PDF
+ggsave(
+  filename = "figure_iris.pdf",
+  width = 10,
+  height = 8
+)
+```
+
+---
+
+## Bonus: Annotated Figure
+
+```{r}
+# Summary data
+summary_data <- mtcars |>
+  group_by(cyl) |>
+  summarize(
+    mean_mpg = mean(mpg),
+    se = sd(mpg) / sqrt(n())
+  )
+
+# Bar plot with error bars and significance
+ggplot(summary_data, aes(x = factor(cyl), y = mean_mpg, fill = factor(cyl))) +
+  geom_col(width = 0.7) +
+  geom_errorbar(aes(ymin = mean_mpg - se, ymax = mean_mpg + se), width = 0.2) +
+  annotate("segment", x = 1, xend = 3, y = 30, yend = 30) +
+  annotate("text", x = 2, y = 31, label = "***", size = 5) +
+  scale_fill_brewer(palette = "Set2") +
+  labs(
+    title = "Mean MPG by Cylinder Count",
+    x = "Cylinders",
+    y = "Mean MPG (± SE)"
+  ) +
+  theme_classic() +
+  theme(legend.position = "none")
+```

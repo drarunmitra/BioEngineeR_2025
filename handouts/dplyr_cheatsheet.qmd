@@ -1,0 +1,180 @@
+---
+title: "dplyr Quick Reference"
+subtitle: "Data Wrangling Cheatsheet"
+format:
+  html:
+    toc: true
+  pdf:
+    toc: false
+---
+
+## The 5 Core Verbs
+
+```r
+library(tidyverse)
+```
+
+### 1. filter() - Select Rows
+
+```r
+# Single condition
+data |> filter(age > 30)
+
+# Multiple conditions (AND)
+data |> filter(age > 30, sex == "F")
+
+# OR condition
+data |> filter(age > 30 | treatment == "Drug")
+
+# Values in a list
+data |> filter(group %in% c("A", "B", "C"))
+
+# NOT
+data |> filter(status != "excluded")
+```
+
+### 2. select() - Select Columns
+
+```r
+# By name
+data |> select(id, age, outcome)
+
+# Range
+data |> select(id:outcome)
+
+# Exclude
+data |> select(-notes, -date_entered)
+
+# Helpers
+data |> select(starts_with("lab_"))
+data |> select(ends_with("_score"))
+data |> select(contains("visit"))
+data |> select(where(is.numeric))
+```
+
+### 3. mutate() - Create/Modify Columns
+
+```r
+# New column
+data |> mutate(bmi = weight / height^2)
+
+# Conditional
+data |> mutate(
+  category = case_when(
+    score < 50 ~ "Low",
+    score < 75 ~ "Medium",
+    TRUE ~ "High"
+  )
+)
+
+# Multiple columns
+data |> mutate(
+  z_score = (value - mean(value)) / sd(value),
+  log_value = log10(value)
+)
+```
+
+### 4. arrange() - Sort Rows
+
+```r
+# Ascending
+data |> arrange(age)
+
+# Descending
+data |> arrange(desc(age))
+
+# Multiple columns
+data |> arrange(group, desc(score))
+```
+
+### 5. summarize() - Aggregate
+
+```r
+# Basic summary
+data |> summarize(
+  mean_val = mean(value, na.rm = TRUE),
+  sd_val = sd(value, na.rm = TRUE),
+  n = n()
+)
+
+# By group
+data |>
+  group_by(treatment) |>
+  summarize(
+    mean = mean(outcome),
+    se = sd(outcome) / sqrt(n())
+  )
+```
+
+## Useful Functions Inside Verbs
+
+| Function | Description |
+|----------|-------------|
+| `n()` | Count rows |
+| `n_distinct()` | Count unique values |
+| `first()` | First value |
+| `last()` | Last value |
+| `mean()` | Mean |
+| `median()` | Median |
+| `sd()` | Standard deviation |
+| `min()` / `max()` | Min/max |
+| `sum()` | Sum |
+| `is.na()` | Test for NA |
+| `!is.na()` | Test for NOT NA |
+
+## Common Patterns
+
+### Count by Group
+```r
+data |> count(group)
+data |> count(group, sort = TRUE)
+```
+
+### Rename Columns
+```r
+data |> rename(new_name = old_name)
+```
+
+### Remove Duplicates
+```r
+data |> distinct()
+data |> distinct(id, .keep_all = TRUE)
+```
+
+### Drop Missing
+```r
+data |> drop_na()
+data |> drop_na(outcome)
+```
+
+### Add Row Numbers
+```r
+data |> mutate(row_id = row_number())
+```
+
+## Joining Data
+
+```r
+# Left join (keep all from x)
+left_join(x, y, by = "id")
+
+# Inner join (keep only matches)
+inner_join(x, y, by = "id")
+
+# Full join (keep all)
+full_join(x, y, by = "id")
+
+# Different column names
+left_join(x, y, by = c("patient_id" = "id"))
+```
+
+## The Pipe Operator
+
+```r
+# Read left to right: "then"
+data |>
+  filter(age >= 18) |>
+  group_by(treatment) |>
+  summarize(mean_outcome = mean(outcome)) |>
+  arrange(desc(mean_outcome))
+```

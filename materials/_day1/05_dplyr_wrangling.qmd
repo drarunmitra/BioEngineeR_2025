@@ -1,0 +1,139 @@
+---
+title: "Data Wrangling with dplyr"
+subtitle: "The Five Core Verbs"
+---
+
+```{r}
+#| label: setup
+#| include: false
+library(tidyverse)
+```
+
+## Learning Objectives
+
+1. Master the 5 core dplyr verbs
+2. Chain operations with the pipe
+3. Perform grouped summaries
+
+## Sample Data
+
+```{r}
+set.seed(2025)
+patients <- tibble(
+  id = paste0("P", sprintf("%03d", 1:20)),
+  age = round(rnorm(20, 55, 15)),
+  treatment = rep(c("Drug_A", "Placebo"), each = 10),
+  response = c(rnorm(10, 75, 10), rnorm(10, 60, 12))
+)
+head(patients)
+```
+
+## 1. filter() - Keep Rows
+
+```{r}
+# Single condition
+patients |> filter(age > 60)
+
+# Multiple conditions (AND)
+patients |> filter(age > 50, treatment == "Drug_A")
+
+# OR condition
+patients |> filter(age < 40 | age > 70)
+```
+
+## 2. select() - Keep Columns
+
+```{r}
+# By name
+patients |> select(id, response)
+
+# Remove columns
+patients |> select(-age)
+
+# Helpers
+patients |> select(starts_with("treat"))
+```
+
+## 3. mutate() - Create Columns
+
+```{r}
+patients |>
+  mutate(
+    response_pct = response / 100,
+    age_group = if_else(age >= 60, "Senior", "Adult")
+  )
+```
+
+## 4. arrange() - Sort Rows
+
+```{r}
+# Ascending
+patients |> arrange(age)
+
+# Descending
+patients |> arrange(desc(response))
+
+# Multiple columns
+patients |> arrange(treatment, desc(response))
+```
+
+## 5. summarize() - Aggregate
+
+```{r}
+patients |>
+  summarize(
+    n = n(),
+    mean_response = mean(response),
+    sd_response = sd(response)
+  )
+```
+
+## group_by() + summarize()
+
+```{r}
+patients |>
+  group_by(treatment) |>
+  summarize(
+    n = n(),
+    mean_response = mean(response),
+    sd_response = sd(response)
+  )
+```
+
+## Chaining It All Together
+
+```{r}
+patients |>
+  filter(age >= 40) |>
+  mutate(age_decade = floor(age / 10) * 10) |>
+  group_by(treatment, age_decade) |>
+  summarize(
+    n = n(),
+    mean_response = mean(response),
+    .groups = "drop"
+  ) |>
+  arrange(desc(mean_response))
+```
+
+## Exercise
+
+::: {.callout-caution title="Try It"}
+Using `mtcars`:
+1. Filter cars with mpg > 20
+2. Create a new column `kpl` (mpg * 0.425)
+3. Group by `cyl` and calculate mean kpl
+:::
+
+::: {.callout-tip collapse="true" title="Solution"}
+```{r}
+mtcars |>
+  filter(mpg > 20) |>
+  mutate(kpl = mpg * 0.425) |>
+  group_by(cyl) |>
+  summarize(mean_kpl = mean(kpl))
+```
+:::
+
+---
+
+**Next:** [ggplot2 Basics](06_ggplot2_basics.qmd)

@@ -1,0 +1,30 @@
+/*-- scss:defaults --*/
+$primary: #2C3E50;
+$link-color: #3498DB;
+
+/*-- scss:rules --*/
+
+.callout-note { border-left-color: $link-color; }
+.callout-tip { border-left-color: #27ae60; }
+.callout-warning { border-left-color: #f39c12; }
+.callout-important { border-left-color: #e74c3c; }
+
+pre.sourceCode {
+  border-radius: 6px;
+  padding: 1rem;
+  font-size: 0.9rem;
+}
+
+table { margin: 1.5em 0; width: 100%; }
+th { background-color: #f8f9fa; padding: 0.75rem; }
+td { padding: 0.75rem; border-bottom: 1px solid #dee2e6; }
+
+@media (max-width: 576px) {
+  body { font-size: 0.95rem; }
+  pre.sourceCode { font-size: 0.8rem; }
+  figure img { max-width: 100%; height: auto; }
+}
+
+@media print {
+  .sidebar, .nav-footer { display: none !important; }
+}

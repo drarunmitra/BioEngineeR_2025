@@ -1,0 +1,97 @@
+---
+title: "ANOVA"
+subtitle: "Comparing Multiple Groups"
+---
+
+```{r}
+#| label: setup
+#| include: false
+library(tidyverse)
+```
+
+## Learning Objectives
+
+1. Perform one-way ANOVA
+2. Run post-hoc tests
+3. Check assumptions
+
+## When to Use ANOVA
+
+- Comparing means across **3+ groups**
+- t-test is for 2 groups; ANOVA extends to many
+
+## Sample Data
+
+```{r}
+set.seed(2025)
+experiment <- tibble(
+  treatment = rep(c("Control", "Low", "Medium", "High"), each = 15),
+  response = c(
+    rnorm(15, 50, 8),
+    rnorm(15, 55, 10),
+    rnorm(15, 65, 9),
+    rnorm(15, 75, 11)
+  )
+)
+```
+
+## One-Way ANOVA
+
+```{r}
+model <- aov(response ~ treatment, data = experiment)
+summary(model)
+```
+
+## Interpretation
+
+- **F value**: Ratio of between-group to within-group variance
+- **Pr(>F)**: p-value for the overall test
+- If p < 0.05: At least one group differs from others
+
+## Post-Hoc Tests
+
+ANOVA tells us *if* groups differ, not *which* ones. Use Tukey's HSD:
+
+```{r}
+TukeyHSD(model)
+```
+
+## Visualization
+
+```{r}
+ggplot(experiment, aes(x = treatment, y = response, fill = treatment)) +
+  geom_boxplot(alpha = 0.7) +
+  geom_jitter(width = 0.2, alpha = 0.5) +
+  scale_fill_viridis_d() +
+  labs(title = "Response by Treatment", y = "Response") +
+  theme_classic() +
+  theme(legend.position = "none")
+```
+
+## Checking Assumptions
+
+```{r}
+# Normality of residuals
+shapiro.test(residuals(model))
+
+# Homogeneity of variance
+bartlett.test(response ~ treatment, data = experiment)
+```
+
+## Exercise
+
+::: {.callout-caution title="Try It"}
+Test if Sepal.Length differs by Species in `iris`.
+:::
+
+::: {.callout-tip collapse="true" title="Solution"}
+```{r}
+model <- aov(Sepal.Length ~ Species, data = iris)
+summary(model)
+TukeyHSD(model)
+```
+:::
+
+---
+
+**Next:** [Correlation & Regression](05_correlation_regression.qmd)

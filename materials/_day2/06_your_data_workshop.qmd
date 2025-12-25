@@ -1,0 +1,112 @@
+---
+title: "Your Data Workshop"
+subtitle: "Practice Session"
+---
+
+```{r}
+#| label: setup
+#| include: false
+library(tidyverse)
+```
+
+## Learning Objectives
+
+1. Apply Day 1-2 skills to a dataset
+2. Practice complete analysis workflow
+3. Get help with your own data
+
+## Workshop Datasets
+
+Choose one of these datasets to work with:
+
+### Option 1: mtcars
+```{r}
+glimpse(mtcars)
+```
+
+### Option 2: iris
+```{r}
+glimpse(iris)
+```
+
+### Option 3: Your Own Data
+Bring your own CSV/Excel file!
+
+## Suggested Workflow
+
+### 1. Load and Explore
+```{r}
+#| eval: false
+# Load data
+data <- read_csv("your_file.csv")
+
+# Explore
+glimpse(data)
+summary(data)
+```
+
+### 2. Descriptive Statistics
+```{r}
+#| eval: false
+data |>
+  group_by(group_variable) |>
+  summarize(
+    n = n(),
+    mean = mean(outcome),
+    sd = sd(outcome)
+  )
+```
+
+### 3. Visualization
+```{r}
+#| eval: false
+ggplot(data, aes(x = group, y = outcome)) +
+  geom_boxplot() +
+  theme_classic()
+```
+
+### 4. Statistical Test
+```{r}
+#| eval: false
+# For 2 groups
+t.test(outcome ~ group, data = data)
+
+# For 3+ groups
+aov(outcome ~ group, data = data) |> summary()
+```
+
+## Practice Exercise
+
+Using `mtcars`:
+
+1. Calculate mean mpg by number of cylinders
+2. Create a boxplot of mpg by cylinders
+3. Test if mpg differs by cylinders (ANOVA)
+4. Run post-hoc test
+
+::: {.callout-tip collapse="true" title="Solution"}
+```{r}
+# 1. Descriptive stats
+mtcars |>
+  group_by(cyl) |>
+  summarize(mean_mpg = mean(mpg), sd_mpg = sd(mpg))
+
+# 2. Visualization
+ggplot(mtcars, aes(x = factor(cyl), y = mpg, fill = factor(cyl))) +
+  geom_boxplot() +
+  labs(x = "Cylinders", y = "MPG") +
+  theme_classic() +
+  theme(legend.position = "none")
+
+# 3. ANOVA
+model <- aov(mpg ~ factor(cyl), data = mtcars)
+summary(model)
+
+# 4. Post-hoc
+TukeyHSD(model)
+```
+:::
+
+---
+
+**Day 2 Complete!** Tomorrow: Publication figures and Quarto reports.

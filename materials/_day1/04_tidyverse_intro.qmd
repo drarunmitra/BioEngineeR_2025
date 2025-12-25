@@ -1,0 +1,117 @@
+---
+title: "Introduction to the Tidyverse"
+subtitle: "The Pipe Operator and Tidy Data"
+---
+
+```{r}
+#| label: setup
+#| include: false
+library(tidyverse)
+```
+
+## Learning Objectives
+
+1. Understand the tidyverse philosophy
+2. Master the pipe operator `|>`
+3. Recognize tidy data principles
+
+## What is the Tidyverse?
+
+A collection of R packages designed for data science:
+
+- **dplyr**: Data manipulation
+- **ggplot2**: Visualization
+- **tidyr**: Data tidying
+- **readr**: Data import
+- **purrr**: Functional programming
+
+```{r}
+library(tidyverse)  # Loads all core packages
+```
+
+## The Pipe Operator
+
+The pipe `|>` passes the result of one function to the next:
+
+```{r}
+# Without pipe (nested functions)
+round(mean(c(1, 2, 3, 4, 5)), 2)
+
+# With pipe (left to right)
+c(1, 2, 3, 4, 5) |>
+  mean() |>
+  round(2)
+```
+
+### Reading Pipes
+
+Read `|>` as **"and then"**:
+
+```{r}
+mtcars |>
+  filter(mpg > 20) |>    # Filter rows, and then
+  select(mpg, cyl) |>    # Select columns, and then
+  head(5)                 # Show first 5
+```
+
+## Tidy Data Principles
+
+1. Each variable is a column
+2. Each observation is a row
+3. Each value is a cell
+
+### Messy vs Tidy
+
+```{r}
+# Messy (wide format)
+messy <- tibble(
+  patient = c("A", "B"),
+  day1 = c(100, 95),
+  day2 = c(105, 98)
+)
+messy
+
+# Tidy (long format)
+tidy <- messy |>
+  pivot_longer(
+    cols = starts_with("day"),
+    names_to = "day",
+    values_to = "value"
+  )
+tidy
+```
+
+## Tibbles vs Data Frames
+
+Tibbles are modern data frames:
+
+```{r}
+# Create a tibble
+my_tibble <- tibble(
+  x = 1:5,
+  y = x^2,
+  z = c("a", "b", "c", "d", "e")
+)
+my_tibble
+```
+
+## Exercise
+
+::: {.callout-caution title="Try It"}
+Use the pipe to:
+1. Take the `iris` dataset
+2. Filter for setosa species
+3. Calculate mean Sepal.Length
+:::
+
+::: {.callout-tip collapse="true" title="Solution"}
+```{r}
+iris |>
+  filter(Species == "setosa") |>
+  summarize(mean_sepal = mean(Sepal.Length))
+```
+:::
+
+---
+
+**Next:** [Data Wrangling with dplyr](05_dplyr_wrangling.qmd)

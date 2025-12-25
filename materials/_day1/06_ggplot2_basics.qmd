@@ -1,0 +1,140 @@
+---
+title: "ggplot2 Basics"
+subtitle: "The Grammar of Graphics"
+---
+
+```{r}
+#| label: setup
+#| include: false
+library(tidyverse)
+```
+
+## Learning Objectives
+
+1. Understand the grammar of graphics
+2. Create common plot types
+3. Customize plots with scales and themes
+
+## The Grammar of Graphics
+
+Every ggplot has three essential components:
+
+1. **Data** - The dataset
+2. **Aesthetics** - Map variables to visual properties
+3. **Geoms** - Geometric objects to display
+
+```{r}
+ggplot(data = mtcars, aes(x = wt, y = mpg)) +
+  geom_point()
+```
+
+## Common Geoms
+
+### Scatter Plot
+
+```{r}
+ggplot(mtcars, aes(x = wt, y = mpg, color = factor(cyl))) +
+  geom_point(size = 3)
+```
+
+### Box Plot
+
+```{r}
+ggplot(mtcars, aes(x = factor(cyl), y = mpg)) +
+  geom_boxplot(fill = "steelblue", alpha = 0.7)
+```
+
+### Histogram
+
+```{r}
+ggplot(mtcars, aes(x = mpg)) +
+  geom_histogram(bins = 10, fill = "steelblue", color = "white")
+```
+
+### Bar Plot
+
+```{r}
+ggplot(mtcars, aes(x = factor(cyl))) +
+  geom_bar(fill = "steelblue")
+```
+
+### Line Plot
+
+```{r}
+# Create time series data
+growth <- tibble(
+  time = 0:10,
+  od = 0.1 * exp(0.3 * time)
+)
+
+ggplot(growth, aes(x = time, y = od)) +
+  geom_line(linewidth = 1, color = "steelblue") +
+  geom_point(size = 2)
+```
+
+## Adding Labels
+
+```{r}
+ggplot(mtcars, aes(x = wt, y = mpg)) +
+  geom_point() +
+  labs(
+    title = "Fuel Efficiency vs Weight",
+    x = "Weight (1000 lbs)",
+    y = "Miles per Gallon"
+  )
+```
+
+## Themes
+
+```{r}
+ggplot(mtcars, aes(x = wt, y = mpg)) +
+  geom_point() +
+  labs(title = "Clean Look") +
+  theme_classic()
+```
+
+## Colors
+
+```{r}
+ggplot(mtcars, aes(x = wt, y = mpg, color = factor(cyl))) +
+  geom_point(size = 3) +
+  scale_color_viridis_d() +
+  theme_classic()
+```
+
+## Faceting
+
+```{r}
+ggplot(mtcars, aes(x = wt, y = mpg)) +
+  geom_point() +
+  facet_wrap(~cyl) +
+  theme_classic()
+```
+
+## Exercise
+
+::: {.callout-caution title="Try It"}
+Create a plot with `iris`:
+1. Scatter plot: Sepal.Length vs Sepal.Width
+2. Color by Species
+3. Add title and axis labels
+4. Use theme_classic()
+:::
+
+::: {.callout-tip collapse="true" title="Solution"}
+```{r}
+ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, color = Species)) +
+  geom_point(size = 2) +
+  labs(
+    title = "Iris Sepal Dimensions",
+    x = "Sepal Length (cm)",
+    y = "Sepal Width (cm)"
+  ) +
+  scale_color_viridis_d() +
+  theme_classic()
+```
+:::
+
+---
+
+**Day 1 Complete!** See you tomorrow for Statistics & Analysis.

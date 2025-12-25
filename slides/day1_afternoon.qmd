@@ -1,0 +1,207 @@
+---
+title: "Day 1: Data Wrangling & Visualization"
+subtitle: "Afternoon Session | Data Analysis with R"
+author: "IISc Bio Engineering Workshop"
+date: "January 6, 2025"
+format:
+  revealjs:
+    theme: [default, ../styles/custom.scss]
+    slide-number: true
+    code-line-numbers: false
+    highlight-style: github
+    transition: fade
+---
+
+## Afternoon Agenda
+
+| Time | Topic |
+|------|-------|
+| 14:00 | dplyr: Data Wrangling |
+| 15:00 | Exercises |
+| 15:30 | Break |
+| 15:45 | ggplot2: Visualization |
+| 16:45 | Day 1 Practice |
+| 17:00 | Wrap-up |
+
+## The 5 dplyr Verbs
+
+1. `filter()` - Pick rows
+2. `select()` - Pick columns
+3. `mutate()` - Create columns
+4. `arrange()` - Sort rows
+5. `summarize()` - Aggregate
+
+## filter(): Pick Rows
+
+```{r}
+#| echo: true
+library(tidyverse)
+
+mtcars |>
+  filter(mpg > 25)
+```
+
+## select(): Pick Columns
+
+```{r}
+#| echo: true
+mtcars |>
+  select(mpg, cyl, wt)
+```
+
+## mutate(): Create Columns
+
+```{r}
+#| echo: true
+mtcars |>
+  mutate(kpl = mpg * 0.425) |>
+  select(mpg, kpl)
+```
+
+## arrange(): Sort Rows
+
+```{r}
+#| echo: true
+mtcars |>
+  arrange(desc(mpg)) |>
+  head(3)
+```
+
+## summarize() + group_by()
+
+```{r}
+#| echo: true
+mtcars |>
+  group_by(cyl) |>
+  summarize(
+    mean_mpg = mean(mpg),
+    n = n()
+  )
+```
+
+## Chaining Operations
+
+```{r}
+#| echo: true
+mtcars |>
+  filter(hp > 100) |>
+  group_by(cyl) |>
+  summarize(mean_mpg = mean(mpg)) |>
+  arrange(desc(mean_mpg))
+```
+
+## Exercise: dplyr Practice {.center}
+
+Using `iris` dataset:
+
+1. Filter for setosa species
+2. Select Sepal columns only
+3. Calculate mean Sepal.Length by Species
+
+## ggplot2: Grammar of Graphics
+
+```{r}
+#| echo: true
+#| output-location: column
+ggplot(mtcars, aes(x = wt, y = mpg)) +
+  geom_point()
+```
+
+## The ggplot Template
+
+```r
+ggplot(data, aes(x = ___, y = ___)) +
+  geom_***()
+```
+
+- `data`: Your data frame
+- `aes()`: Aesthetic mappings
+- `geom_*()`: Geometric objects
+
+## Common Geoms
+
+| Geom | Use Case |
+|------|----------|
+| `geom_point()` | Scatter plot |
+| `geom_line()` | Line plot |
+| `geom_bar()` | Bar chart |
+| `geom_boxplot()` | Box plot |
+| `geom_histogram()` | Distribution |
+
+## Adding Color
+
+```{r}
+#| echo: true
+#| output-location: column
+ggplot(mtcars, aes(x = wt, y = mpg,
+                   color = factor(cyl))) +
+  geom_point(size = 3)
+```
+
+## Faceting
+
+```{r}
+#| echo: true
+#| fig-width: 10
+ggplot(mtcars, aes(x = wt, y = mpg)) +
+  geom_point() +
+  facet_wrap(~cyl)
+```
+
+## Themes
+
+```{r}
+#| echo: true
+#| output-location: column
+ggplot(mtcars, aes(x = wt, y = mpg)) +
+  geom_point() +
+  theme_classic()
+```
+
+## Labels
+
+```{r}
+#| echo: true
+#| output-location: column
+ggplot(mtcars, aes(x = wt, y = mpg)) +
+  geom_point() +
+  labs(
+    title = "Weight vs MPG",
+    x = "Weight (1000 lbs)",
+    y = "Miles per Gallon"
+  ) +
+  theme_classic()
+```
+
+## Exercise: ggplot2 {.center}
+
+Create a scatter plot of `iris`:
+
+- x = Sepal.Length
+- y = Petal.Length
+- color = Species
+- Add labels and theme_classic()
+
+## Day 1 Recap
+
+✅ R fundamentals (vectors, data frames)
+
+✅ Data import with readr
+
+✅ The tidyverse & pipe operator
+
+✅ dplyr: 5 core verbs
+
+✅ ggplot2: Grammar of graphics
+
+## Tomorrow: Day 2
+
+- Descriptive statistics
+- Hypothesis testing
+- t-tests and ANOVA
+- Correlation & regression
+- Hands-on workshop
+
+## Questions? {.center}
+
+### See you tomorrow at 9:00 AM!

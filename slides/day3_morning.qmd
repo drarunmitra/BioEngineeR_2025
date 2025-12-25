@@ -1,0 +1,188 @@
+---
+title: "Day 3: Publication Figures"
+subtitle: "Morning Session | Data Analysis with R"
+author: "IISc Bio Engineering Workshop"
+date: "January 8, 2025"
+format:
+  revealjs:
+    theme: [default, ../styles/custom.scss]
+    slide-number: true
+    code-line-numbers: false
+    highlight-style: github
+    transition: fade
+---
+
+## Day 3 Agenda
+
+| Time | Topic |
+|------|-------|
+| 09:00 | Publication-Quality Figures |
+| 10:00 | Multi-panel Figures |
+| 10:30 | Break |
+| 10:45 | Case Study |
+| 12:30 | Lunch |
+| 14:00 | Quarto Reports |
+| 15:00 | Mini Project |
+| 16:30 | Workshop Wrap-up |
+
+## Publication Standards
+
+### Common Requirements
+
+- **Resolution**: 300+ DPI
+- **Font size**: Minimum 8pt
+- **Colors**: Colorblind-friendly
+- **Format**: TIFF or PDF
+
+## Custom Theme
+
+```{r}
+#| echo: true
+library(tidyverse)
+
+theme_publication <- function(base_size = 12) {
+  theme_classic(base_size = base_size) +
+    theme(
+      plot.title = element_text(face = "bold"),
+      axis.title = element_text(face = "bold"),
+      panel.border = element_rect(fill = NA, color = "black"),
+      legend.position = "bottom"
+    )
+}
+```
+
+## Colorblind-Friendly Palette
+
+```{r}
+#| echo: true
+okabe_ito <- c("#E69F00", "#56B4E9", "#009E73",
+               "#F0E442", "#0072B2", "#D55E00",
+               "#CC79A7", "#999999")
+```
+
+## Applying the Theme
+
+```{r}
+#| echo: true
+#| output-location: column
+ggplot(mtcars, aes(wt, mpg,
+                   color = factor(cyl))) +
+  geom_point(size = 3) +
+  scale_color_manual(values = okabe_ito) +
+  labs(
+    title = "Fuel Efficiency",
+    x = "Weight (1000 lbs)",
+    y = "MPG"
+  ) +
+  theme_publication()
+```
+
+## Exporting Figures
+
+```{r}
+#| echo: true
+#| eval: false
+# High resolution for journals
+ggsave("figure1.tiff", width = 6, height = 4,
+       dpi = 300, compression = "lzw")
+
+# Vector for manuscripts
+ggsave("figure1.pdf", width = 6, height = 4)
+
+# For presentations
+ggsave("figure1.png", width = 8, height = 6, dpi = 150)
+```
+
+## The patchwork Package
+
+```{r}
+#| echo: true
+library(patchwork)
+```
+
+Combine ggplot2 plots easily!
+
+## Creating Panels
+
+```{r}
+#| echo: true
+p1 <- ggplot(mtcars, aes(wt, mpg)) +
+  geom_point() + theme_classic()
+
+p2 <- ggplot(mtcars, aes(factor(cyl), mpg)) +
+  geom_boxplot() + theme_classic()
+
+p3 <- ggplot(mtcars, aes(mpg)) +
+  geom_histogram(bins = 10) + theme_classic()
+```
+
+## Side by Side
+
+```{r}
+#| echo: true
+p1 + p2
+```
+
+## Stacked
+
+```{r}
+#| echo: true
+p1 / p2
+```
+
+## Complex Layouts
+
+```{r}
+#| echo: true
+(p1 + p2) / p3
+```
+
+## Adding Labels
+
+```{r}
+#| echo: true
+(p1 + p2) / p3 +
+  plot_annotation(tag_levels = "A")
+```
+
+## Shared Theme
+
+```{r}
+#| echo: true
+(p1 + p2) / p3 &
+  theme_classic(base_size = 10) &
+  theme(plot.tag = element_text(face = "bold"))
+```
+
+## Collected Legends
+
+```{r}
+#| echo: true
+#| fig-width: 10
+pa <- ggplot(iris, aes(Sepal.Length, Petal.Length,
+                       color = Species)) +
+  geom_point() + theme_classic()
+
+pb <- ggplot(iris, aes(Sepal.Width, Petal.Width,
+                       color = Species)) +
+  geom_point() + theme_classic()
+
+pa + pb + plot_layout(guides = "collect")
+```
+
+## Exercise {.center}
+
+Create a 2x2 figure with:
+
+- Panel A: Scatter plot
+- Panel B: Boxplot
+- Panel C: Histogram
+- Panel D: Bar chart
+
+Add "A", "B", "C", "D" labels!
+
+## Break Time! {.center}
+
+### 15 minutes
+
+☕ Next: Case Study Analysis

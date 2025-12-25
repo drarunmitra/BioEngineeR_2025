@@ -1,0 +1,131 @@
+---
+title: "Data Import"
+subtitle: "Reading External Data into R"
+---
+
+```{r}
+#| label: setup
+#| include: false
+library(tidyverse)
+library(here)
+```
+
+## Learning Objectives
+
+1. Import CSV files with `read_csv()`
+2. Use the `here` package for file paths
+3. Handle common import issues
+4. Explore imported data
+
+## The here Package
+
+```{r}
+#| eval: false
+library(here)
+
+# Always works, regardless of working directory
+here("data", "raw", "patients.csv")
+```
+
+## Reading CSV Files
+
+```{r}
+#| eval: false
+library(tidyverse)
+
+# Read a CSV file
+data <- read_csv(here("data", "raw", "experiment.csv"))
+```
+
+### Common Options
+
+```{r}
+#| eval: false
+read_csv(
+  "file.csv",
+  skip = 1,              # Skip header rows
+  na = c("", "NA", "-"), # Define missing values
+  col_types = cols(      # Specify column types
+    id = col_character(),
+    value = col_double()
+  )
+)
+```
+
+## Reading Excel Files
+
+```{r}
+#| eval: false
+library(readxl)
+
+# Read Excel file
+data <- read_excel(
+  here("data", "raw", "data.xlsx"),
+  sheet = "Sheet1"
+)
+
+# List available sheets
+excel_sheets(here("data", "raw", "data.xlsx"))
+```
+
+## Exploring Your Data
+
+```{r}
+# Use built-in data for demonstration
+data <- mtcars
+
+# First look
+head(data)
+glimpse(data)
+
+# Summary statistics
+summary(data)
+
+# Dimensions
+dim(data)
+nrow(data)
+ncol(data)
+
+# Column names
+names(data)
+```
+
+## Common Issues
+
+### Problem: Wrong delimiter
+
+```{r}
+#| eval: false
+# For semicolon-separated files
+read_csv2("file.csv")
+
+# For tab-separated files
+read_tsv("file.txt")
+```
+
+### Problem: Encoding issues
+
+```{r}
+#| eval: false
+read_csv("file.csv", locale = locale(encoding = "UTF-8"))
+```
+
+## Exercise
+
+::: {.callout-caution title="Try It"}
+1. Load the `tidyverse` and `here` packages
+2. Use `glimpse()` on the `iris` dataset
+3. How many rows and columns does it have?
+:::
+
+::: {.callout-tip collapse="true" title="Solution"}
+```{r}
+library(tidyverse)
+glimpse(iris)
+dim(iris)  # 150 rows, 5 columns
+```
+:::
+
+---
+
+**Next:** [Introduction to the Tidyverse](04_tidyverse_intro.qmd)
