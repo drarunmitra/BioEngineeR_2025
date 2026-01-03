@@ -22,7 +22,7 @@ website:
         href: schedule.qmd
     right:
       - icon: github
-        href: https://github.com/drarunjmitra/bioengineer2026
+        href: https://github.com/drarunmitra/BioEngineeR_2026
         aria-label: GitHub
 
   sidebar: false

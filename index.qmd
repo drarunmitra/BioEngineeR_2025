@@ -30,27 +30,18 @@ A hands-on **3-day workshop** introducing R programming for biomedical data anal
 
 ## Topics Covered
 
-### Day 1: R Foundations
-
 - Introduction to Data Science using R
 - Best Practices for Data Science (Reproducibility)
 - Primer to R & RStudio
-- Working with Data – I (Loading, Packages, Pipes, dplyr Verbs)
-- Data Visualization – I (ggplot2 Defaults)
-
-### Day 2: Statistics & Reporting
-
-- Introduction to Quarto (Authoring Reports)
-- Working with Data – II (Exploratory Data Analysis)
-- Publication Ready Tables (gtsummary)
-- Working with Data – III (Data Analysis Workflows)
-
-### Day 3: Advanced Topics & AI
-
-- Best Practices: Using AI for Data Science
-- Data Visualization – II (Facets, Layouts, Themes, Extensions)
-- Advanced R & Quarto
-- Group Presentations & Feedback
+- Working with Data 
+  - Loading, Packages, Pipes, dplyr Verbs
+  - Exploratory Data Analysis
+  - Data Analysis Workflows
+- Communicating Research Effectively
+  - Data Visualization Basics (`ggplot2`)
+  - Publication Ready Tables (`gtsummary`)
+  - Quarto Reports
+- Best Practices using AI and R
 
 
 ## Who Should Attend?
