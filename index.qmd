@@ -27,7 +27,6 @@ A hands-on **3-day workshop** introducing R programming for biomedical data anal
 
 :::
 
-------------------------------------------------------------------------
 
 ## Topics Covered
 
@@ -53,7 +52,6 @@ A hands-on **3-day workshop** introducing R programming for biomedical data anal
 - Advanced R & Quarto
 - Group Presentations & Feedback
 
-------------------------------------------------------------------------
 
 ## Who Should Attend?
 
@@ -64,7 +62,6 @@ This workshop is ideal for:
 - Lab members wanting to improve reproducibility
 - Anyone curious about R – no prior experience required!
 
-------------------------------------------------------------------------
 
 ## Contact
 
@@ -93,7 +90,6 @@ Department of Bioengineering, IISc Bangalore
 
 :::
 
-------------------------------------------------------------------------
 
 ## Venue
 

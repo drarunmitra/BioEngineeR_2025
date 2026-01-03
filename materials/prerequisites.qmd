@@ -2,6 +2,7 @@
 title: "Workshop Prerequisites"
 subtitle: "BioEngineeR 2026 | Data Analysis with R"
 author: "Department of Bioengineering, IISc Bangalore"
+author-title: "Organised by"
 ---
 
 ## Overview

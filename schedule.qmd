@@ -9,7 +9,6 @@ subtitle: "BioEngineeR 2026 | 6th – 8th January 2026"
 Please complete the [Set-up Guide](materials/prerequisites.qmd) **before** you come to the workshop.
 :::
 
-------------------------------------------------------------------------
 
 ## Day 1: R Foundations (January 6th) {#day1}
 
@@ -35,7 +34,6 @@ Please complete the [Set-up Guide](materials/prerequisites.qmd) **before** you c
 | 15:45 – 16:15 | Data Visualization – I | ggplot2 Defaults |
 | 16:15 – 17:00 | Group Activity | Activity on Day 1 Topics |
 
-------------------------------------------------------------------------
 
 ## Day 2: Statistics & Reporting (January 7th) {#day2}
 
@@ -61,7 +59,6 @@ Please complete the [Set-up Guide](materials/prerequisites.qmd) **before** you c
 | 15:45 – 16:15 | Working with Data – III | Data Analysis Workflows |
 | 16:15 – 17:00 | Group Activity – 2 | Build a Data Analysis Pipeline |
 
-------------------------------------------------------------------------
 
 ## Day 3: Advanced Topics & AI (January 8th) {#day3}
 
@@ -87,7 +84,6 @@ Please complete the [Set-up Guide](materials/prerequisites.qmd) **before** you c
 | 15:45 – 16:15 | Group Presentations | Show and Share |
 | 16:15 – 17:00 | Feedback and Valedictory | Wrap-up Session |
 
-------------------------------------------------------------------------
 
 
 
