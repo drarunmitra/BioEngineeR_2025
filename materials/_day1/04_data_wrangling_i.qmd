@@ -70,7 +70,7 @@ excel_sheets(here("data", "raw", "data.xlsx"))
 
 ## Exploring Your Data
 
-```{r}
+```{webr-r}
 # Use built-in data for demonstration
 data <- mtcars
 
@@ -82,9 +82,8 @@ glimpse(data)
 summary(data)
 
 # Dimensions
-dim(data)
-nrow(data)
-ncol(data)
+print(paste("Rows:", nrow(data)))
+print(paste("Cols:", ncol(data)))
 
 # Column names
 names(data)
@@ -119,10 +118,10 @@ read_csv("file.csv", locale = locale(encoding = "UTF-8"))
 :::
 
 ::: {.callout-tip collapse="true" title="Solution"}
-```{r}
+```{webr-r}
 library(tidyverse)
 glimpse(iris)
-dim(iris)  # 150 rows, 5 columns
+print(paste("Rows:", nrow(iris), "Cols:", ncol(iris)))
 ```
 :::
 

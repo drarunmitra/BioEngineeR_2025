@@ -307,4 +307,4 @@ See @fig-iris for the scatter plot and @tbl-summary for means.
 
 ---
 
-**Next:** [Mini Project](05_mini_project.qmd)
+**Next:** [Exploratory Data Analysis](02_exploratory_data_analysis.qmd)

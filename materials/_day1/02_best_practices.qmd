@@ -1,0 +1,16 @@
+---
+title: "Best Practices for Data Science"
+format: html
+---
+
+## Reproducibility
+
+- Project organization
+- Naming conventions
+- Version control (Git/GitHub)
+
+## File Organization
+
+- Using R Projects
+- The `here` package
+- Folder structure

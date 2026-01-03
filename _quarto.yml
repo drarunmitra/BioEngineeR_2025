@@ -1,66 +1,35 @@
 project:
-  type: book
+  type: website
   output-dir: _output/site
-
-book:
-  title: "Data Analysis with R"
-  subtitle: "3-Day Workshop | IISc Bio Engineering"
-  author:
-    - name: "Dr. Arun Mitra"
-      affiliations:
-        - name: "Indian Institute of Science"
-          department: "Bio Engineering"
-  date: "January 6-8, 2025"
-  date-format: "MMMM D, YYYY"
-
-  page-navigation: true
-  search: true
-
-  sidebar:
-    style: docked
-    search: true
-    collapse-level: 2
-
-  chapters:
+  render:
     - index.qmd
+    - schedule.qmd
+    - materials/prerequisites.qmd
 
-    - part: "Day 1: R Foundations"
-      chapters:
-        - materials/_day1/01_welcome.qmd
-        - materials/_day1/02_r_fundamentals.qmd
-        - materials/_day1/03_data_import.qmd
-        - materials/_day1/04_tidyverse_intro.qmd
-        - materials/_day1/05_dplyr_wrangling.qmd
-        - materials/_day1/06_ggplot2_basics.qmd
+website:
+  title: "BioEngineeR 2026"
+  description: "R for Biomedical Research | 3-Day Workshop | IISc Bioengineering"
+  
+  navbar:
+    title: "BioEngineeR 2026"
+    logo: figures/BioEngineeR2026_final.png
+    left:
+      - text: "Home"
+        href: index.qmd
+      - text: "Set-up"
+        href: materials/prerequisites.qmd
+      - text: "Schedule"
+        href: schedule.qmd
+    right:
+      - icon: github
+        href: https://github.com/drarunjmitra/bioengineer2026
+        aria-label: GitHub
 
-    - part: "Day 2: Statistics & Analysis"
-      chapters:
-        - materials/_day2/01_descriptive_stats.qmd
-        - materials/_day2/02_hypothesis_testing.qmd
-        - materials/_day2/03_ttests.qmd
-        - materials/_day2/04_anova.qmd
-        - materials/_day2/05_correlation_regression.qmd
-        - materials/_day2/06_your_data_workshop.qmd
-
-    - part: "Day 3: Reporting & Communication"
-      chapters:
-        - materials/_day3/01_publication_figures.qmd
-        - materials/_day3/02_multipanel_figures.qmd
-        - materials/_day3/03_case_study_dfu.qmd
-        - materials/_day3/04_quarto_reports.qmd
-        - materials/_day3/05_mini_project.qmd
-
-    - part: "Exercises"
-      chapters:
-        - exercises/day1/exercise_participant.qmd
-        - exercises/day2/exercise_participant.qmd
-        - exercises/day3/exercise_participant.qmd
-
-    - part: "Reference"
-      chapters:
-        - handouts/dplyr_cheatsheet.qmd
-        - handouts/ggplot2_cheatsheet.qmd
-        - handouts/stats_cheatsheet.qmd
+  sidebar: false
+  
+  page-footer:
+    left: "© 2026 BioEngineeR Workshop"
+    right: "Department of Bioengineering, IISc Bangalore"
 
 format:
   html:
@@ -74,7 +43,7 @@ format:
     code-copy: true
     code-overflow: wrap
     highlight-style: github
-    number-sections: true
+    number-sections: false
     anchor-sections: true
 
   pdf:
@@ -96,9 +65,7 @@ knitr:
     fig.align: center
     fig.alt: "Figure generated from R code"
 
-crossref:
-  chapters: true
-
 resources:
   - data/
   - slides/
+  - figures/

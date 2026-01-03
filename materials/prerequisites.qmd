@@ -1,0 +1,227 @@
+---
+title: "Workshop Prerequisites"
+subtitle: "BioEngineeR 2026 | Data Analysis with R"
+author: "Department of Bioengineering, IISc Bangalore"
+---
+
+## Overview
+
+Welcome to **BioEngineeR 2026**! The next steps will guide you through the software installation and self-paced learning required before the workshop. Please complete these prerequisites before the workshop begins.
+
+::: callout-note
+## Estimated Time
+
+**3-4 hours** (including installation and self-paced learning)
+:::
+
+
+## 1. Software Installation
+
+### 1.1 Install R
+
+R is a free, open-source programming language for statistical computing and graphics.
+
+::: panel-tabset
+#### Windows
+
+1.  Visit [CRAN R Project](https://cran.r-project.org/bin/windows/base/)
+2.  Click **"Download R-4.x.x for Windows"** (latest version)
+3.  Run the downloaded `.exe` file
+4.  Follow the installation wizard (accept all defaults)
+5.  Click **Finish** when complete
+6.  Optional Step (Recommended): Install RTools (http://cran.r-project.org/bin/windows/Rtools/)
+
+#### macOS
+
+1.  Visit [CRAN R Project for macOS](https://cran.r-project.org/bin/macosx/)
+2.  Download the appropriate version:
+    -   **Apple Silicon (M1/M2/M3)**: `R-4.x.x-arm64.pkg`
+    -   **Intel Mac**: `R-4.x.x-x86_64.pkg`
+3.  Open the downloaded `.pkg` file
+4.  Follow the installation prompts
+5.  Move R to your Applications folder
+6.  Optional Step (Recommended): Install RTools (https://mac.r-project.org/tools/)
+:::
+
+### 1.2 Install RStudio
+
+RStudio is an integrated development environment (IDE) that makes working with R much easier.
+
+1.  Visit [Posit Downloads](https://posit.co/download/rstudio-desktop/)
+2.  Scroll to **"RStudio Desktop"** section
+3.  Choose Operating System
+4.  Click **"Download RStudio"**
+5.  Run the downloaded `.exe`/`.dmg` file
+6.  Follow installation wizard (Windows)/ Drag RStudio to your Applications folder (Mac)
+
+### 1.3 Verify Installation
+
+1.  Open **RStudio** (not R)
+2.  In the Console pane (bottom-left), type:
+
+``` r
+R.version.string
+```
+
+3.  You should see output like: `"R version 4.5.x (202x-xx-xx)"`
+
+::: callout-tip
+## Troubleshooting
+
+If you encounter installation issues, consult you can email me at [dr.arunmitra\@gmail.com](mailto:dr.arunmitra@gmail.com)
+:::
+
+
+
+## 2. RStudio Interface Overview
+
+RStudio is an integrated development environment (IDE) designed to help you be more productive in your daily data science work.
+
+After you have installed [R](https://cloud.r-project.org/) and [RStudio](https://posit.co/downloads/), you are ready to begin this section!
+
+When you start RStudio, you’ll see four key regions or “panes” in the interface: the Source pane, the Console pane, the Environment pane and the Output Pane.
+
+### **RStudio Panes**
+
+1.  The **Source pane** is where you can edit and save R or Python scripts or author computational documents like Quarto and R Markdown.
+
+2.  The **Console pane** is used to write short interactive R commands.
+
+3.  The **Environment pane** displays temporary R objects as created during that R session.
+
+4.  The **Output pane** displays the plots, tables, or HTML outputs of executed code along with files saved to disk.
+
+![A screenshot of the RStudio UI. There are 4 primary panes, the source, console, environment, and output panes.](https://docs.posit.co/ide/user/ide/get-started/images/rstudio-panes-labeled.jpeg){alt="A screenshot of the RStudio UI. There are 4 primary panes, the source, console, environment, and output panes."}
+
+### **Blank slate**
+
+When you quit R, do not save the workspace to an .Rdata file. When you launch, do not reload the workspace from an `.Rdata` file. Long-term reproducibility is enhanced when you turn this feature off and clear R’s memory at every restart. Starting with a blank slate provides timely feedback that encourages the development of scripts that are complete and self-contained.
+
+In RStudio, set this via **Tools** \> **Global Options**, making sure to clear “Restore .RData into Workspace at Startup” and choosing **Never** on the “Save workspace to .RData on exit”.
+
+![A screenshot of Tools \> Global Options in RStudio. It highlights turning off the saving of workspace and restoration of .RData into workspace.](https://docs.posit.co/ide/user/ide/get-started/images/blank-slate.png){alt="A screenshot of Tools > Global Options in RStudio. It highlights turning off the saving of workspace and restoration of .RData into workspace."}
+
+### **RStudio Projects**
+
+RStudio projects make it straightforward to divide your work into multiple contexts, each with their own working directory, workspace, history, and source documents.
+
+To create a new project in the RStudio, use the **File** \> **New Project** command.
+
+In the **New Project** wizard that pops up, select **New Directory**, then **New Project**. Name the project “hello-ggplot2” and then click the **Create Project** button.
+
+This will launch you into a new RStudio Project inside a new folder called “hello-ggplot2”.
+
+RStudio projects give you a solid workflow that will serve you well in the future:
+
+-   Create an RStudio project for each data analysis project.
+
+-   Keep data files there; we’ll talk about loading them into R in [Local Data](https://docs.posit.co/ide/user/ide/guide/data/data-local.html).
+
+-   Keep scripts there; edit them, run them in bits or as a whole.
+
+-   Save your outputs (plots and cleaned data) there.
+
+Everything you need is in one place, and cleanly separated from all the other projects that you are working on.
+
+Before the workshop, familiarize yourself with RStudio's four main panes:
+
+| Pane | Location | Purpose |
+|------------------|----------------------------|--------------------------|
+| **Source** | Top-left | Write and edit R scripts |
+| **Console** | Bottom-left | Run R commands interactively |
+| **Environment** | Top-right | View loaded data and objects |
+| **Files/Plots/Help** | Bottom-right | Navigate files, view plots, access documentation |
+
+### Recommended Video (10 min)
+
+Watch this brief orientation: [A Quick Tour of RStudio](https://youtu.be/SdMPh5uphO0?si=vSmE90bitFBVaIn_) by Posit (formerly RStudio)
+
+
+## 3. R Programming Basics
+
+Complete the following self-paced learning (~2 hours) to build foundational skills.
+
+### Core Concepts to Learn
+
+Before the workshop, ensure you understand:
+
+- [ ] How to create and run an R script
+- [ ] Basic data types (numeric, character, logical)
+- [ ] Vectors and data frames
+- [ ] Installing and loading packages
+- [ ] Using the pipe operator (`|>` or `%>%`)
+
+*Step 1: Programming Basics*
+Practice R directly in your browser — no installation needed:
+https://r-primers.andrewheiss.com/basics/02-programming-basics/
+
+*Step 2: Workflow Basics*
+Read this chapter from R for Data Science (2e):
+<https://r4ds.hadley.nz/workflow-basics.html>
+
+
+### Video Tutorials (Optional but Recommended)
+
+#### dplyr (Data Wrangling)
+
+::: {.content-visible when-format="html"}
+<iframe width="560" height="315" src="https://www.youtube.com/embed/y9KJmUGc8SE" title="ggplot2 Tutorial" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="max-width: 100%; border-radius: 8px;"></iframe>
+:::
+
+::: {.content-visible when-format="pdf"}
+Watch on YouTube: <https://www.youtube.com/watch?v=y9KJmUGc8SE>
+:::
+
+#### ggplot2 (Visualization)
+
+::: {.content-visible when-format="html"}
+<iframe width="560" height="315" src="https://www.youtube.com/embed/IWXcw6NHM6E" title="dplyr Tutorial" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="max-width: 100%; border-radius: 8px;"></iframe>
+:::
+
+::: {.content-visible when-format="pdf"}
+Watch on YouTube: <https://www.youtube.com/watch?v=IWXcw6NHM6E>
+:::
+
+
+
+
+### Download Cheatsheets
+
+Keep these handy during the workshop:
+
+- **Data Transformation `dplyr`:** <https://rstudio.github.io/cheatsheets/data-transformation.pdf>
+- **Data Visualization `ggplot2`:** <https://rstudio.github.io/cheatsheets/data-visualization.pdf>
+- **All cheatsheets:** <https://posit.co/resources/cheatsheets/>
+
+
+## Pre-Workshop Checklist
+
+Before the workshop, please confirm:
+•⁠  ⁠[ ] R installed (version 4.5+)
+•⁠  ⁠[ ] RStudio installed and working
+•⁠  ⁠[ ] Completed Programming Basics primer
+•⁠  ⁠[ ] Read Workflow Basics chapter
+•⁠  ⁠[ ] Watched the video tutorials
+•⁠  ⁠[ ] Downloaded Cheatsheets
+
+
+::: callout-warning
+## Need Help?
+
+If you encounter any installation issues, please reach out to at  [dr.arunmitra\@gmail.com](mailto:dr.arunmitra@gmail.com)
+:::
+
+
+## Contact
+
+Shayna,     
+Department of Bioengineering, IISc Bangalore.   
++91 9611564411
+
+
+## Venue of the Workshop
+
+
+Department of Bioengineering, IISc Bangalore
+
+<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3887.205422235134!2d77.56436599999999!3d13.0225867!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae175ddde7c0a5%3A0xb76e8f8e4aea7d5!2sDepartment%20of%20Bioengineering!5e0!3m2!1sen!2sin!4v1767445752453!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>

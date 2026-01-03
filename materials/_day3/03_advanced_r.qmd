@@ -1,0 +1,14 @@
+---
+title: "Advanced R & Quarto"
+format: html
+---
+
+## Advanced Functions
+
+- Writing your own functions
+- Iteration with `purrr`
+
+## Advanced Quarto
+
+- Parametrized reports
+- Presentations

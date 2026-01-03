@@ -1,0 +1,13 @@
+---
+title: "Publication Ready Tables"
+format: html
+---
+
+## Introduction to {gtsummary}
+
+- Creating summary tables
+- Customizing output
+
+## Regression Tables
+
+- `tbl_regression()` etc.

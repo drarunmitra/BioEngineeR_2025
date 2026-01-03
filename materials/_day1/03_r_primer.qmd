@@ -41,27 +41,27 @@ class(is_student)
 
 Vectors are collections of values of the same type:
 
-```{r}
+```{webr-r}
 # Numeric vector
 ages <- c(22, 25, 31, 28, 24)
-ages
+print(ages)
 
 # Character vector
 treatments <- c("Control", "Drug_A", "Drug_B")
-treatments
+print(treatments)
 
 # Operations on vectors
-mean(ages)
-max(ages)
-ages + 10
+print(mean(ages))
+print(max(ages))
+print(ages + 10)
 ```
 
 ### Accessing Elements
 
-```{r}
-ages[1]          # First element
-ages[c(1, 3)]    # First and third
-ages[ages > 25]  # Filter by condition
+```{webr-r}
+print(ages[1])          # First element
+print(ages[c(1, 3)])    # First and third
+print(ages[ages > 25])  # Filter by condition
 ```
 
 ## Data Frames
@@ -90,11 +90,11 @@ patients[, "treatment"] # By column name
 
 ## Functions
 
-```{r}
+```{webr-r}
 # Built-in functions
-mean(ages)
-sd(ages)
-length(ages)
+print(mean(ages))
+print(sd(ages))
+print(length(ages))
 summary(ages)
 ```
 
@@ -116,20 +116,23 @@ example(mean)
 :::
 
 ::: {.callout-tip collapse="true" title="Solution"}
-```{r}
+```{webr-r}
 viability <- c(95, 87, 72, 91, 88)
-mean(viability)
-sd(viability)
+mean_val <- mean(viability)
+sd_val <- sd(viability)
+
+print(paste("Mean:", mean_val))
+print(paste("SD:", sd_val))
 
 experiment <- data.frame(
   sample_id = paste0("S", 1:5),
   treatment = c("Control", "Drug", "Drug", "Control", "Drug"),
   viability = viability
 )
-experiment
+print(experiment)
 ```
 :::
 
 ---
 
-**Next:** [Data Import](03_data_import.qmd)
+**Next:** [Data Wrangling I](04_data_wrangling_i.qmd)

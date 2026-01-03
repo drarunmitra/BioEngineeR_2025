@@ -71,4 +71,4 @@ sqrt(16)
 
 ---
 
-**Next:** [R Fundamentals](02_r_fundamentals.qmd)
+**Next:** [R Primer](03_r_primer.qmd)

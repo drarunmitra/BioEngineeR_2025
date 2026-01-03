@@ -1,0 +1,93 @@
+---
+title: "Workshop Schedule"
+subtitle: "BioEngineeR 2026 | 6th – 8th January 2026"
+---
+
+::: {.callout-tip}
+## Before You Arrive
+
+Please complete the [Set-up Guide](materials/prerequisites.qmd) **before** you come to the workshop.
+:::
+
+------------------------------------------------------------------------
+
+## Day 1: R Foundations (January 6th) {#day1}
+
+### Morning Session
+
+| Time | Topic | Description |
+|------|-------|-------------|
+| 09:00 – 09:30 | Registration and Icebreaker | |
+| 09:30 – 10:30 | Introduction to Data Science using R | Foundations of Data Science |
+| 10:30 – 11:00 | Best Practices for Data Science | Reproducibility and Workflows |
+| 11:00 – 11:15 | ☕ Coffee Break | |
+| 11:15 – 12:15 | Primer to R & RStudio | Primers and IDE Set-up |
+| 12:15 – 13:00 | Hands-on Session – 1 | Create Project, Import Data |
+| 13:00 – 14:00 | 🍽️ Lunch | |
+
+### Afternoon Session
+
+| Time | Topic | Description |
+|------|-------|-------------|
+| 14:00 – 15:00 | Working with Data – I | Loading Packages, Pipes, dplyr Verbs |
+| 15:00 – 15:30 | Hands-on Session – 2 | dplyr Verbs Practice |
+| 15:30 – 15:45 | ☕ Coffee Break | |
+| 15:45 – 16:15 | Data Visualization – I | ggplot2 Defaults |
+| 16:15 – 17:00 | Group Activity | Activity on Day 1 Topics |
+
+------------------------------------------------------------------------
+
+## Day 2: Statistics & Reporting (January 7th) {#day2}
+
+### Morning Session
+
+| Time | Topic | Description |
+|------|-------|-------------|
+| 09:00 – 09:30 | Recap of Day 1 | |
+| 09:30 – 10:30 | Introduction to Quarto | Quarto Authoring in R |
+| 10:30 – 11:15 | Hands-on Session – 3 | Prepare a Report with Quarto |
+| 11:15 – 11:30 | ☕ Coffee Break | |
+| 11:30 – 12:15 | Working with Data – II | Exploratory Data Analysis |
+| 12:15 – 13:00 | Hands-on Session – 4 | Activity on EDA |
+| 13:00 – 14:00 | 🍽️ Lunch | |
+
+### Afternoon Session
+
+| Time | Topic | Description |
+|------|-------|-------------|
+| 14:00 – 15:00 | Publication Ready Tables | gtsummary Package |
+| 15:00 – 15:30 | Group Activity – 1 | Summary Tables Practice |
+| 15:30 – 15:45 | ☕ Coffee Break | |
+| 15:45 – 16:15 | Working with Data – III | Data Analysis Workflows |
+| 16:15 – 17:00 | Group Activity – 2 | Build a Data Analysis Pipeline |
+
+------------------------------------------------------------------------
+
+## Day 3: Advanced Topics & AI (January 8th) {#day3}
+
+### Morning Session
+
+| Time | Topic | Description |
+|------|-------|-------------|
+| 09:00 – 09:30 | Recap of Day 2 | |
+| 09:30 – 10:30 | Best Practices: Using AI for Data Science | General Guidelines |
+| 10:30 – 11:15 | Hands-on Session – 5 | AI Tools Set-up |
+| 11:15 – 11:30 | ☕ Coffee Break | |
+| 11:30 – 12:15 | Data Visualization – II | Facets, Layouts, Themes, Extensions |
+| 12:15 – 13:00 | Hands-on Session – 6 | Workflows: AI Assisted Plotting |
+| 13:00 – 14:00 | 🍽️ Lunch | |
+
+### Afternoon Session
+
+| Time | Topic | Description |
+|------|-------|-------------|
+| 14:00 – 14:30 | Group Activity – 3 | Final Exercises |
+| 14:30 – 15:30 | Advanced R & Quarto | Advanced Topics |
+| 15:30 – 15:45 | ☕ Coffee Break | |
+| 15:45 – 16:15 | Group Presentations | Show and Share |
+| 16:15 – 17:00 | Feedback and Valedictory | Wrap-up Session |
+
+------------------------------------------------------------------------
+
+
+

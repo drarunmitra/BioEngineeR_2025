@@ -48,3 +48,8 @@ Thumbs.db
 
 # Slides HTML
 slides/*.html
+
+**/*.quarto_ipynb
+
+# Auto Claude data directory
+.auto-claude/

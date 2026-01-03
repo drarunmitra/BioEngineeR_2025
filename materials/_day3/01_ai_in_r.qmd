@@ -1,0 +1,15 @@
+---
+title: "AI for Data Science"
+format: html
+---
+
+## Using LLMs for Coding
+
+- Writing code with AI
+- Debugging with AI
+- Refactoring and optimizing
+
+## Best Practices
+
+- Verification
+- Security and Privacy

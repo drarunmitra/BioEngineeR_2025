@@ -1,0 +1,15 @@
+---
+title: "Exploratory Data Analysis"
+format: html
+---
+
+## Checking your data
+
+- `glimpse()`, `summary()`, `skimr`
+
+## Missing values
+
+- Visualizing missingness
+- Handling NAs
+
+## Data Distributions
