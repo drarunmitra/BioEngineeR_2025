@@ -218,10 +218,3 @@ Shayna,
 Department of Bioengineering, IISc Bangalore.   
 +91 9611564411
 
-
-## Venue of the Workshop
-
-
-Department of Bioengineering, IISc Bangalore
-
-<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3887.205422235134!2d77.56436599999999!3d13.0225867!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae175ddde7c0a5%3A0xb76e8f8e4aea7d5!2sDepartment%20of%20Bioengineering!5e0!3m2!1sen!2sin!4v1767445752453!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>

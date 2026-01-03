@@ -23,6 +23,7 @@ data/generated/*.rds
 figures/*.png
 figures/*.pdf
 !figures/.gitkeep
+!figures/BioEngineeR2026*.png
 
 # Admin private files
 admin/participants/
