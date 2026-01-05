@@ -1,0 +1,101 @@
+patient_id,age,sex,bmi,treatment,baseline_score,adverse_event,week_4_score,week_8_score,change_score,responder
+PT001,54,F,33.4,Placebo,69,False,74,79,10,False
+PT002,64,M,23.2,High Dose,53,True,56,59,6,False
+PT003,38,F,24.7,Low Dose,68,False,66,64,-4,False
+PT004,47,F,25.1,Low Dose,37,False,44,51,14,True
+PT005,54,M,28.8,Placebo,52,False,54,56,4,False
+PT006,81,M,24.7,Placebo,33,False,36,39,6,False
+PT007,72,F,27.1,High Dose,45,False,47,50,5,False
+PT008,53,M,20.4,Placebo,24,False,28,32,8,False
+PT009,64,M,26.4,Low Dose,49,True,51,53,4,False
+PT010,57,F,30.7,High Dose,37,False,51,65,28,True
+PT011,43,F,28.3,Placebo,39,True,42,45,6,False
+PT012,45,M,25.1,High Dose,62,False,71,81,19,True
+PT013,42,F,29.4,Placebo,14,False,12,9,-5,False
+PT014,54,M,29.4,Low Dose,36,True,35,35,-1,False
+PT015,57,M,27.6,Low Dose,36,False,38,39,3,False
+PT016,34,F,28.7,Placebo,56,True,53,50,-6,False
+PT017,68,F,30.2,High Dose,67,False,77,88,21,True
+PT018,55,F,23.1,Placebo,46,True,46,46,0,False
+PT019,53,M,23.6,Low Dose,42,True,48,54,12,True
+PT020,51,F,28.6,Low Dose,67,False,71,75,8,False
+PT021,74,M,32.8,Low Dose,56,False,61,67,11,True
+PT022,53,F,25.6,Placebo,50,False,51,52,2,False
+PT023,53,M,21.9,High Dose,67,False,76,84,17,True
+PT024,64,M,30.9,High Dose,51,False,61,72,21,True
+PT025,55,M,24.7,Low Dose,41,False,40,38,-3,False
+PT026,64,M,24.4,Placebo,69,True,66,64,-5,False
+PT027,56,F,16.5,Placebo,55,False,53,52,-3,False
+PT028,56,F,25.5,Low Dose,40,False,32,25,-15,False
+PT029,69,M,28.4,Placebo,34,False,41,48,14,True
+PT030,54,F,21.9,Placebo,48,False,46,44,-4,False
+PT031,44,F,29.5,Low Dose,54,False,59,65,11,True
+PT032,40,F,21.8,High Dose,46,False,52,58,12,True
+PT033,56,F,23.4,Placebo,42,False,40,38,-4,False
+PT034,43,M,22.0,High Dose,51,True,54,56,5,False
+PT035,64,F,22.3,High Dose,76,False,88,99,23,True
+PT036,58,M,19.9,Placebo,55,True,58,60,5,False
+PT037,51,F,24.4,Placebo,58,False,59,61,3,False
+PT038,47,M,24.1,Low Dose,49,False,59,70,21,True
+PT039,54,F,24.6,Placebo,56,True,59,63,7,False
+PT040,62,F,26.5,Placebo,50,False,49,48,-2,False
+PT041,65,F,19.0,Placebo,61,False,62,63,2,False
+PT042,41,M,27.7,High Dose,47,False,54,61,14,True
+PT043,78,M,28.1,Low Dose,59,False,73,87,28,True
+PT044,47,F,25.1,Placebo,52,False,54,55,3,False
+PT045,41,M,28.0,High Dose,61,False,58,54,-7,False
+PT046,74,M,25.5,High Dose,31,False,52,74,43,True
+PT047,70,F,33.0,Placebo,45,False,41,36,-9,False
+PT048,66,M,30.1,High Dose,79,False,100,120,41,True
+PT049,47,M,29.0,Low Dose,76,False,81,86,10,False
+PT050,68,F,20.3,Low Dose,89,False,94,100,11,True
+PT051,54,F,25.8,Low Dose,57,False,64,71,14,True
+PT052,38,M,28.6,Low Dose,46,False,50,54,8,False
+PT053,47,F,29.6,High Dose,63,False,76,88,25,True
+PT054,40,F,25.6,Placebo,42,False,42,41,-1,False
+PT055,66,M,33.9,Low Dose,66,True,64,62,-4,False
+PT056,69,M,27.7,High Dose,35,False,46,58,23,True
+PT057,43,F,23.5,Low Dose,62,False,68,75,13,True
+PT058,53,F,23.3,Low Dose,25,False,30,35,10,False
+PT059,60,F,28.1,High Dose,50,False,66,82,32,True
+PT060,41,M,29.2,High Dose,77,True,89,100,23,True
+PT061,66,M,28.3,Placebo,23,False,26,29,6,False
+PT062,43,F,25.3,Low Dose,56,False,62,68,12,True
+PT063,38,M,30.4,Placebo,43,False,41,38,-5,False
+PT064,45,M,20.1,High Dose,74,False,80,85,11,True
+PT065,51,M,23.6,Low Dose,22,False,28,33,11,True
+PT066,45,M,26.7,Placebo,29,False,27,26,-3,False
+PT067,69,F,29.4,Low Dose,86,False,94,101,15,True
+PT068,55,F,27.9,Placebo,43,False,46,50,7,False
+PT069,38,M,21.8,Low Dose,48,False,56,64,16,True
+PT070,59,F,30.4,High Dose,44,False,61,78,34,True
+PT071,38,M,32.1,Placebo,59,False,57,54,-5,False
+PT072,73,F,33.1,Low Dose,44,False,39,34,-10,False
+PT073,41,M,27.4,High Dose,46,True,55,65,19,True
+PT074,50,F,34.6,High Dose,36,False,51,66,30,True
+PT075,57,M,28.6,Placebo,53,False,51,50,-3,False
+PT076,46,M,27.5,High Dose,57,False,65,73,16,True
+PT077,43,F,26.3,Placebo,67,False,68,70,3,False
+PT078,58,F,23.2,Low Dose,59,False,63,67,8,False
+PT079,36,F,24.9,Placebo,55,False,58,61,6,False
+PT080,67,M,26.3,Low Dose,49,False,55,60,11,True
+PT081,39,F,24.5,High Dose,71,True,72,73,2,False
+PT082,40,F,26.1,Low Dose,30,False,44,58,28,True
+PT083,53,M,17.2,Low Dose,42,False,50,59,17,True
+PT084,28,M,30.0,Placebo,43,False,44,46,3,False
+PT085,55,F,19.1,Low Dose,38,False,44,49,11,True
+PT086,46,M,26.8,Placebo,53,False,50,47,-6,False
+PT087,59,F,26.5,Placebo,46,False,42,39,-7,False
+PT088,54,F,25.6,Placebo,59,False,57,54,-5,False
+PT089,66,M,23.5,Placebo,33,False,37,41,8,False
+PT090,44,M,29.4,Low Dose,51,False,65,78,27,True
+PT091,65,F,28.2,Placebo,71,False,76,80,9,False
+PT092,55,F,29.2,Placebo,36,False,36,36,0,False
+PT093,49,F,23.3,High Dose,42,False,55,68,26,True
+PT094,58,F,30.3,Low Dose,54,False,66,78,24,True
+PT095,46,F,21.8,High Dose,39,True,44,49,10,False
+PT096,48,F,27.1,Placebo,40,False,46,51,11,True
+PT097,49,M,21.4,Low Dose,41,False,50,59,18,True
+PT098,57,F,29.0,High Dose,46,False,50,54,8,False
+PT099,54,M,22.2,Low Dose,37,False,45,53,16,True
+PT100,29,M,30.3,Low Dose,94,False,110,126,32,True
